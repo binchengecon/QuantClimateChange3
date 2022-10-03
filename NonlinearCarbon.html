@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Nonlinear Carbon Dynamics Test1 &#8212; Quant Climate Change</title>
+    <title>Nonlinear Carbon Dynamics &#8212; Quant Climate Change</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -116,7 +116,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Nonlinear Carbon Dynamics Test1
+   Nonlinear Carbon Dynamics
   </a>
  </li>
  <li class="toctree-l1">
@@ -338,7 +338,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Nonlinear Carbon Dynamics Test1</h1>
+                <h1>Nonlinear Carbon Dynamics</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -350,8 +350,8 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="nonlinear-carbon-dynamics-test1">
-<h1>Nonlinear Carbon Dynamics Test1<a class="headerlink" href="#nonlinear-carbon-dynamics-test1" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="nonlinear-carbon-dynamics">
+<h1>Nonlinear Carbon Dynamics<a class="headerlink" href="#nonlinear-carbon-dynamics" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Module_model</span> <span class="kn">import</span> <span class="o">*</span>
@@ -367,7 +367,7 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "19015d28c010409ba2061b24df94de32"}
+{"version_major": 2, "version_minor": 0, "model_id": "605ae34bfec6465dadf66595e64b095b"}
 </script></div>
 </div>
 <div class="cell docutils container">
@@ -386,7 +386,7 @@ title="Print to PDF"
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="ne">C</span>:\Users\ALIENW~1\AppData\Local\Temp/ipykernel_27016/3823408626.py in &lt;module&gt;
+<span class="ne">C</span>:\Users\ALIENW~1\AppData\Local\Temp/ipykernel_10888/3823408626.py in &lt;module&gt;
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">tv</span><span class="p">,</span><span class="n">Tv</span><span class="p">,</span><span class="n">Cv</span><span class="p">,</span><span class="n">Ct</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;rcp60co2eqv3&quot;</span><span class="p">,</span><span class="mf">0.3916</span><span class="p">)</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> 
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -443,18 +443,32 @@ title="Print to PDF"
 <span class="g g-Whitespace">     </span><span class="mi">22</span>     <span class="k">return</span> <span class="n">fun_wrapped</span><span class="p">,</span> <span class="n">y0</span>
 
 <span class="nn">~\QuantClimateChange\Module_model.py</span> in <span class="ni">dydt</span><span class="nt">(t, y)</span>
-<span class="g g-Whitespace">    </span><span class="mi">386</span> 
-<span class="g g-Whitespace">    </span><span class="mi">387</span>         <span class="n">dC</span> <span class="o">=</span> <span class="n">V</span>
-<span class="ne">--&gt; </span><span class="mi">388</span>         <span class="n">dC</span> <span class="o">+=</span> <span class="n">Yam</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">sa</span>                                  <span class="c1">#  anthropogenic emissions from Ca spline                                                # volcanism</span>
-<span class="g g-Whitespace">    </span><span class="mi">389</span>         <span class="c1">#dC += Ca * sa                                       # added for bif diagrams</span>
 <span class="g g-Whitespace">    </span><span class="mi">390</span>         <span class="c1">#dC -= wa * C * vegcover * veggrowth(T)             # carbon uptake by vegetation</span>
+<span class="g g-Whitespace">    </span><span class="mi">391</span>         <span class="c1">#dC -= vegflux(T, C, t)</span>
+<span class="ne">--&gt; </span><span class="mi">392</span>         <span class="n">dC</span> <span class="o">-=</span> <span class="n">vegfluxdyn</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">t</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">393</span>         <span class="n">dC</span> <span class="o">+=</span> <span class="n">oceanatmphysflux</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">fracseaice</span><span class="p">(</span><span class="n">T</span><span class="p">))</span>    <span class="c1"># physical solubility into ocean * fraction of ice-free ocean</span>
+<span class="g g-Whitespace">    </span><span class="mi">394</span>         <span class="c1">#dC += oceanbioflux(T,t) * (1 - fracseaice(T))      # biological pump flux * fraction sea ice</span>
 
-<span class="nn">~\QuantClimateChange\Module_model.py</span> in <span class="ni">Yam</span><span class="nt">(t)</span>
-<span class="g g-Whitespace">    </span><span class="mi">162</span>         <span class="n">em_points</span> <span class="o">=</span> <span class="n">Cebis</span>
-<span class="g g-Whitespace">    </span><span class="mi">163</span> 
-<span class="ne">--&gt; </span><span class="mi">164</span>         <span class="n">tck</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">t_points</span><span class="p">,</span> <span class="n">em_points</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">165</span>         <span class="k">return</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">tck</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">166</span> 
+<span class="nn">~\QuantClimateChange\Module_model.py</span> in <span class="ni">vegfluxdyn</span><span class="nt">(T, C, t)</span>
+<span class="g g-Whitespace">    </span><span class="mi">361</span> 
+<span class="g g-Whitespace">    </span><span class="mi">362</span>     <span class="k">def</span> <span class="nf">vegfluxdyn</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">t</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">363</span>         <span class="k">return</span> <span class="n">wa</span> <span class="o">*</span> <span class="n">C</span> <span class="o">*</span> <span class="n">vegcover</span> <span class="o">*</span> <span class="n">veggrowthdyn</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">t</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">364</span> 
+<span class="g g-Whitespace">    </span><span class="mi">365</span>     <span class="c1"># ocean carbon fluxes</span>
+
+<span class="nn">~\QuantClimateChange\Module_model.py</span> in <span class="ni">veggrowthdyn</span><span class="nt">(T, t)</span>
+<span class="g g-Whitespace">    </span><span class="mi">337</span>             <span class="k">return</span> <span class="mi">0</span>
+<span class="g g-Whitespace">    </span><span class="mi">338</span>         <span class="k">if</span> <span class="p">(</span><span class="n">T</span> <span class="o">&gt;=</span> <span class="n">Tveglow</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span><span class="n">T</span> <span class="o">&lt;</span> <span class="n">Tvegoptlow</span><span class="p">(</span><span class="n">t</span><span class="p">)):</span>
+<span class="ne">--&gt; </span><span class="mi">339</span>             <span class="k">return</span> <span class="n">acc</span> <span class="o">/</span> <span class="p">(</span><span class="n">Tvegoptlow</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">-</span> <span class="n">Tveglow</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">T</span> <span class="o">-</span> <span class="n">Tveglow</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">340</span>         <span class="k">if</span> <span class="p">(</span><span class="n">T</span> <span class="o">&gt;=</span> <span class="n">Tvegoptlow</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span><span class="n">T</span> <span class="o">&lt;=</span> <span class="n">Topt2</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">341</span>             <span class="k">return</span> <span class="n">acc</span>
+
+<span class="nn">~\QuantClimateChange\Module_model.py</span> in <span class="ni">Tvegoptlow</span><span class="nt">(t)</span>
+<span class="g g-Whitespace">    </span><span class="mi">272</span>         <span class="n">em_points</span> <span class="o">=</span> <span class="n">Toptmod</span>
+<span class="g g-Whitespace">    </span><span class="mi">273</span> 
+<span class="ne">--&gt; </span><span class="mi">274</span>         <span class="n">tck</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">t_points</span><span class="p">,</span> <span class="n">em_points</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">275</span>         <span class="k">return</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">tck</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">276</span> 
 
 <span class="nn">C:\ProgramData\Anaconda3\lib\site-packages\scipy\interpolate\fitpack.py</span> in <span class="ni">splrep</span><span class="nt">(x, y, w, xb, xe, k, task, s, t, full_output, per, quiet)</span>
 <span class="g g-Whitespace">    </span><span class="mi">289</span> 
