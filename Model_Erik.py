@@ -1,12 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""Created on Wed Jan 13 20:48:20 2021
-
-@author: erik
-"""
-
-## version including anthropogenic emissions
-
 import os
 import numpy as np
 import configparser 
@@ -31,7 +22,7 @@ from scipy import fft, arange, signal
 
 def model(pulse , year, cearth=0.3916):
     ## heat capacity, incoming radiation
-# Earth heat capacity
+    # Earth heat capacity
     # cearth = 0.3916
     #Incoming radiation
     Q0 = 342.5
@@ -107,13 +98,14 @@ def model(pulse , year, cearth=0.3916):
     sa = 1
     # Anthropogenic emissions (zero or one)
     Can = pd.read_csv("rcp00co2eqv3.csv")
+    Can = pd.read_csv("rcp60co2eqv3.csv")
     #Can = pd.read_csv("Et-sim2.csv")
     #times2co2eq
     #rcp85co2eq.csv
     #Ca = Can[(Can["YEARS"] > 1899) & (Can["YEARS"] < 2201)]
     #Ca = Can[(Can["YEARS"] > 1799) & (Can["YEARS"] < 2501)]
     Ca = Can[(Can["YEARS"] > 1799) & (Can["YEARS"] < 2801)]
-    Ca1 = Can[(Can["YEARS"] > 1799) & (Can["YEARS"] < 2801)]
+    # Ca1 = Can[(Can["YEARS"] > 1799) & (Can["YEARS"] < 2801)]
     #Ca["YEARS"] = np.arange(start=0,stop=401,step=1)
     #Ca = Ca.pd.DataFrame()
     Ca = Ca["CO2EQ"]
@@ -216,12 +208,12 @@ def model(pulse , year, cearth=0.3916):
             #return acc
             return 0
 
-    T_values = np.linspace(280, 315, 201)
-    plt.plot(T_values, [veggrowth(val) for val in T_values])
-    plt.tick_params(axis='both', which='major', labelsize=13)
-    plt.xlabel('Temperature (K)',fontsize = 14);
-    plt.ylabel('Vegetation growth',fontsize = 14);
-    plt.grid(linestyle=':')
+    # T_values = np.linspace(280, 315, 201)
+    # plt.plot(T_values, [veggrowth(val) for val in T_values])
+    # plt.tick_params(axis='both', which='major', labelsize=13)
+    # plt.xlabel('Temperature (K)',fontsize = 14);
+    # plt.ylabel('Vegetation growth',fontsize = 14);
+    # plt.grid(linestyle=':')
     #veggrowth(286.6181299517094)
 
     # ramp function of lower optimum temperature
@@ -411,8 +403,9 @@ def model(pulse , year, cearth=0.3916):
     Ts = 286.45
     Cs = 269
 
+    length = 100000
     init = [Ts, Cs]
-    t_eval = np.linspace(0, 1000, 100000)
+    t_eval = np.linspace(0, tspan, length)
     sol = solve_ivp(dydt, t_eval[[0, -1]], init, t_eval=t_eval, method='RK45', max_step=0.1)
     #sol = solve_ivp(dydt, t_eval[[0, -1]], init, t_eval=t_eval, method='BDF')
 
@@ -423,8 +416,8 @@ def model(pulse , year, cearth=0.3916):
 
 
     #Fixed points
-    print('Tp = {:.1f}'.format(Tv[-1]))
-    print('Cp = {:.1f}'.format(Cv[-1]))
+    # print('Tp = {:.1f}'.format(Tv[-1]))
+    # print('Cp = {:.1f}'.format(Cv[-1]))
 
     Tvmid = Tv - Ts
     # Cvmid = Cv - Cs
@@ -434,9 +427,11 @@ def model(pulse , year, cearth=0.3916):
     # Tvmax = np.max(Tv) 
 
     # Total atmospheric carbon
-    Ct = Cv + VCvegoptlow(t_eval)[0:100000]
+    Ct = Cv + VCvegoptlow(t_eval)
 
-    return tv, Tvmid, Cv
+    return tv, Tvmid, Cv, Ct
+
+
 
 
 
