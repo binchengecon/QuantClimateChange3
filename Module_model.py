@@ -26,7 +26,7 @@ except ImportError:
     import scipy.io as sio
     from scipy.integrate import solve_ivp
     from scipy.fft import fft, fftfreq
-    
+
 try:
     import pandas as pd
 except ImportError:
@@ -423,10 +423,10 @@ def model(pulse, year, baseline,cearth=0.3916):
     Ts = 286.45
     Cs = 269
 
-    length = 100000
+    length = 1000
     init = [Ts, Cs]
     t_eval = np.linspace(0, tspan, length)
-    sol = solve_ivp(dydt, t_eval[[0, -1]], init, t_eval=t_eval, method='RK45', max_step=0.1)
+    sol = solve_ivp(dydt, t_eval[[0, -1]], init, t_eval=t_eval, method='RK45', max_step=1)
     #sol = solve_ivp(dydt, t_eval[[0, -1]], init, t_eval=t_eval, method='BDF')
 
     #Extract values of temperature and C02
