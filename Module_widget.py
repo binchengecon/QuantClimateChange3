@@ -50,6 +50,7 @@ except ImportError:
     from plotly.offline import init_notebook_mode, iplot
 
 
+
 # Define global parameters for parameter checks
 params_pass = False
 model_solved = False
