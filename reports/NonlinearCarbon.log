@@ -32,7 +32,7 @@ plt.show()
 
 [1;31m---------------------------------------------------------------------------[0m
 [1;31mNameError[0m                                 Traceback (most recent call last)
-[1;32mC:\Users\ALIENW~1\AppData\Local\Temp/ipykernel_31584/2071115236.py[0m in [0;36m<module>[1;34m[0m
+[1;32mC:\Users\ALIENW~1\AppData\Local\Temp/ipykernel_20912/2071115236.py[0m in [0;36m<module>[1;34m[0m
 [0;32m      6[0m [1;31m#     print(j+1)[0m[1;33m[0m[1;33m[0m[0m
 [0;32m      7[0m [1;33m[0m[0m
 [1;32m----> 8[1;33m [0mfig[0m[1;33m,[0m [0max[0m [1;33m=[0m [0mplot_simulation[0m[1;33m([0m[0mpulsesize[0m[1;33m,[0m [0mpulseyear[0m[1;33m,[0m[0mpulsebaseline[0m[1;33m,[0m[0mpulsecearth[0m[1;33m,[0m [0mselected_index[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
