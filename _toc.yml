@@ -9,3 +9,4 @@ sections:
 # - file: markdown-notebooks
 - file: NonlinearCarbon
 # - file: markdown-notebooks
+- file: NonlinearCarbon_slider
