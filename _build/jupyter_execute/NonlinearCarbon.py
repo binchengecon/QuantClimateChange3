@@ -19,12 +19,12 @@ display(Param_Panel)
 # In[2]:
 
 
-tv,Tv,Cv,Ct = model(0,0,"rcp60co2eqv3",0.3916)
+# tv,Tv,Cv,Ct = model(0,0,"rcp60co2eqv3",0.3916)
 
-plt.figure(figsize=(10, 5))
-plt.plot(tv, Ct)
-plt.tick_params(axis='both', which='major', labelsize=18)
-plt.xlabel('Time (year)',fontsize = 18);
-plt.ylabel('Carbon concentration (ppm)',fontsize = 18);
-plt.grid(linestyle=':')
+# plt.figure(figsize=(10, 5))
+# plt.plot(tv, Ct)
+# plt.tick_params(axis='both', which='major', labelsize=18)
+# plt.xlabel('Time (year)',fontsize = 18);
+# plt.ylabel('Carbon concentration (ppm)',fontsize = 18);
+# plt.grid(linestyle=':')
 

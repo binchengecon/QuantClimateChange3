@@ -15,4 +15,6 @@ import numpy as np
 #     import plotly.graph_objs as go
 #     from plotly.subplots import make_subplots
 #     from plotly.offline import init_notebook_mode, iplot
+from IPython.display import Image
+
     
