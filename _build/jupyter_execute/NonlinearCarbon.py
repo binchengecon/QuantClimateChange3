@@ -42,12 +42,4 @@ selected_index = [all_var_names.index(element) for element in simulate_external.
 fig, ax = plot_simulation(pulsesize, pulseyear,pulsebaseline,pulsecearth, selected_index)
 plt.tight_layout()
 plt.show()
-# Image("test2.png")
-
-
-# In[ ]:
-
-
-
-Image("test.png")
 

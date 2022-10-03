@@ -165,7 +165,7 @@ def checkParamsFn(b):
     ## This is the function triggered by the updateParams button. It will
     ## check dictionary params to ensure that adjustment costs are well-specified.
     clear_output() ## clear the output of the existing print-out
-    display(Javascript("Jupyter.notebook.execute_cells([3])"))
+    display(Javascript("Jupyter.notebook.execute_cells([2])"))
     display(simulate_box_external_run) ## after clearing output, re-display buttons
 
     global params_pass
