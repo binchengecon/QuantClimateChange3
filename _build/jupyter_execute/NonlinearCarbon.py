@@ -32,19 +32,20 @@ display(simulate_box_external_run)
 # In[3]:
 
 
-all_var_names = ['Temperature Anomaly', 'Carbon Concentration Dynamics', 'Carbon Emission', 'Impulse Response Function']
-selected_index = [all_var_names.index(element) for element in simulate_external.value]
-# print(selected_index)
+# all_var_names = ['Temperature Anomaly', 'Carbon Concentration Dynamics', 'Carbon Emission', 'Impulse Response Function']
+# selected_index = [all_var_names.index(element) for element in simulate_external.value]
+# # print(selected_index)
 
-# for j in selected_index:
-#     print(j+1)
+# # for j in selected_index:
+# #     print(j+1)
 
-fig, ax = plot_simulation(pulsesize, pulseyear,pulsebaseline,pulsecearth, selected_index)
-plt.tight_layout()
-plt.show()
+# fig, ax = plot_simulation(pulsesize, pulseyear,pulsebaseline,pulsecearth, selected_index)
+# plt.tight_layout()
+# plt.show()
+Image("test2.png")
 
 
-# In[ ]:
+# In[4]:
 
 
 
