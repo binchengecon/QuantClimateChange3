@@ -15,6 +15,28 @@ from IPython.core.display import display
 from IPython.display import clear_output, Markdown, Latex
 from IPython.display import Javascript
 import numpy as np
+
+
+
+try: 
+    import scipy.optimize as optim
+    from scipy.optimize import curve_fit
+    from scipy import interpolate
+    from scipy import fft, arange, signal
+    import scipy.io as sio
+    from scipy.integrate import solve_ivp
+    from scipy.fft import fft, fftfreq
+except ImportError:
+    print("Installing scipy. This may take a while.")
+    from pip._internal import main as pipmain
+    pipmain(['install', 'scipy'])
+    import scipy.optimize as optim
+    from scipy.optimize import curve_fit
+    from scipy import interpolate
+    from scipy import fft, arange, signal
+    import scipy.io as sio
+    from scipy.integrate import solve_ivp
+    from scipy.fft import fft, fftfreq
 try:
     import plotly.graph_objs as go
     from plotly.tools import make_subplots
@@ -171,5 +193,16 @@ def checkParamsFn(b):
 #         params_pass = True
 #         print("Parameter check passed.")
         
+# def runSimFn(b):
+#     ## This is the function triggered by the runSim button.
+#     global model_solved
+#     if params_pass:
+#         print("Running simulation...")
+#         display(Javascript("Jupyter.notebook.execute_cells([5])"))
+#         model_solved = True
+#     else:
+#         print("You must update the parameters first.")
+
 
 checkParams.on_click(checkParamsFn)
+# runSim.on_click(runSimFn)
