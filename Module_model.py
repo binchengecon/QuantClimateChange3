@@ -7,8 +7,13 @@ from matplotlib import pyplot as plt
 from matplotlib import rcParams
 from matplotlib.colors import SymLogNorm
 import matplotlib.mlab
-import pandas as pd
 
+try:
+    import pandas as pd
+except ImportError:
+    print("Installing pandas. This may take a while.")
+    from pip._internal import main as pipmain
+    pipmain(['install', 'pandas'])
 
 # os.chdir('/Users/erikchavez/Documents/Papers/Economic_Policy/C-T-dynamic-ODEs/')
 
