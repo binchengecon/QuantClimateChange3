@@ -23,11 +23,10 @@ repository:
   branch: master  # Which branch of the repository should be used when creating links (optional)
 
 launch_buttons:
-  binderhub_url: "https://mybinder.org"
-  # thebe: true
+  # binderhub_url: "https://mybinder.org"
+  thebe: true
   # colab_url: "https://colab.research.google.com"
   # notebook_interface: "jupyterlab"  # or "classic"
-
 
 
 binder:
