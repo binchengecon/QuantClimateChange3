@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Nonlinear Carbon Dynamics Test1
+# # Nonlinear Carbon Dynamics
 
 # In[1]:
 
