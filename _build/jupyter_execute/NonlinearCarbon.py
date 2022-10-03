@@ -19,14 +19,34 @@ display(Param_Panel)
 # In[2]:
 
 
-# tv,Tv,Cv,Ct = model(0,0,"rcp60co2eqv3",0.3916)
+pulsesize = pulse_size.value
+pulseyear = pulse_year.value
+pulsebaseline=pulse_baseline.value
+pulsecearth = cearth.value
 
-# plt.figure(figsize=(10, 5))
-# plt.plot(tv, Ct)
-# plt.tick_params(axis='both', which='major', labelsize=18)
-# plt.xlabel('Time (year)',fontsize = 18);
-# plt.ylabel('Carbon concentration (ppm)',fontsize = 18);
-# plt.grid(linestyle=':')
-# plt.savefig("test.png")
+
+
+display(simulate_box_external_run)
+
+
+# In[3]:
+
+
+all_var_names = ['Temperature Anomaly', 'Carbon Concentration Dynamics', 'Carbon Emission', 'Impulse Response Function']
+selected_index = [all_var_names.index(element) for element in simulate_external.value]
+# print(selected_index)
+
+# for j in selected_index:
+#     print(j+1)
+
+fig, ax = plot_simulation(pulsesize, pulseyear,pulsebaseline,pulsecearth, selected_index)
+plt.tight_layout()
+plt.show()
+
+
+# In[ ]:
+
+
+
 Image("test.png")
 

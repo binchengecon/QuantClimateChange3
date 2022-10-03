@@ -96,6 +96,12 @@ cearth = widgets.BoundedFloatText( ## risk free rate
     layout = layout_med
 )
 
+checkParams = widgets.Button(
+    description='Update parameters',
+    disabled=False,
+    button_style='', # 'success', 'info', 'warning', 'danger' or ''
+)
+
 runSim = widgets.Button(
     description='Run simulation',
     disabled=False,
@@ -128,7 +134,42 @@ simulate_external = widgets.SelectMultiple(options = sim_var_names_external,
 
 simulate_box_external = VBox([widgets.Label(value="Select variables to simulate:"),simulate_external], layout = Layout(width='100%'))
 
-run_box_sim = VBox([widgets.Label(value="Run simulation"), runSim], layout = Layout(width='100%'))
+run_box_sim = VBox([widgets.Label(value="Run simulation"),checkParams, runSim], layout = Layout(width='100%'))
 
 simulate_box_external_run = HBox([simulate_box_external, run_box_sim], layout = Layout(width='100%'))
 
+def checkParamsFn(b):
+    ## This is the function triggered by the updateParams button. It will
+    ## check dictionary params to ensure that adjustment costs are well-specified.
+    clear_output() ## clear the output of the existing print-out
+    display(Javascript("Jupyter.notebook.execute_cells([3])"))
+    display(simulate_box_external_run) ## after clearing output, re-display buttons
+
+    global params_pass
+    global model_solved
+    model_solved = False
+#     rho_vals = np.array([np.float(r) for r in rhos.value.split(',')])
+#     if gamma.value < 1:
+#         params_pass = False
+#         print("Gamma should be greater than {}.".format(1))
+#     elif chi.value <0 or chi.value > 1:
+#         params_pass = False
+#         print("Chi should be between 0 and 1.")
+#     elif alpha.value <=0 or alpha.value > 1:
+#         params_pass = False
+#         print("Alpha should be between 0 and 1.")
+# #    elif epsilon.value <=1:
+# #        params_pass = False
+# #        print("Epsilon should be greater than 1.")
+#     elif 1 in rho_vals:
+#         params_pass = False
+#         print("Rho should be different from 1.")
+#     elif max(rho_vals) >= 1.8:
+#         params_pass = False
+#         print("Rho should be smaller than 1.8.")
+#     else:
+#         params_pass = True
+#         print("Parameter check passed.")
+        
+
+checkParams.on_click(checkParamsFn)
