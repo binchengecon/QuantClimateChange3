@@ -20,7 +20,8 @@ from scipy import fft, arange, signal
 #### INPUT PARAMETERS
 
 
-def model(pulse , year, cearth=0.3916):
+def model(pulse, year, baseline,cearth=0.3916):
+# def model(pulse, year, baseline,cearth):
     ## heat capacity, incoming radiation
     # Earth heat capacity
     # cearth = 0.3916
@@ -97,7 +98,8 @@ def model(pulse , year, cearth=0.3916):
     # Switch to take anthropogenic emissions
     sa = 1
     # Anthropogenic emissions (zero or one)
-    Can = pd.read_csv("rcp00co2eqv3.csv")
+    csvname = baseline+".csv"
+    Can = pd.read_csv(csvname)
     #Can = pd.read_csv("Et-sim2.csv")
     #times2co2eq
     #rcp85co2eq.csv

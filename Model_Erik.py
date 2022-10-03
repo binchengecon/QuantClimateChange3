@@ -20,7 +20,7 @@ from scipy import fft, arange, signal
 #### INPUT PARAMETERS
 
 
-def model(pulse , year, cearth=0.3916):
+def model(pulse , year, cearth=0.3916,baseline = "rcp60co2eqv3"):
     ## heat capacity, incoming radiation
     # Earth heat capacity
     # cearth = 0.3916
@@ -435,7 +435,7 @@ def model(pulse , year, cearth=0.3916):
 
 
 
-tv, Tvmid, Cv,Ct = model(pulse=0,year=0,cearth=0.3916)
+tv, Tvmid, Cv,Ct = model(pulse=0,year=0,cearth=0.3916,baseline = "rcp60co2eqv3")
 ## plot from 1800 to 2400
 
 # tv2 = np.linspace(1800, 2800, 100000)
