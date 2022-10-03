@@ -21,7 +21,8 @@ def plot_simulation(pulse, year,baseline,cearth, selected_index):
     colors = ['blue', 'green', 'red', 'gold', 'cyan', 'magenta', 'yellow', 'salmon', 'grey', 'black']
     titles = ['Temperature Anomaly T', 'Carbon Concentration Dynamics C', 'Carbon Emission G', 'Impulse Response Function']
     ylabels = ['Temperature (K)', 'Carbon (ppm)', 'Emission (Gtc)', 'Degree (Celsius)']
-    fig, axs = plt.subplots(len(selected_index),1, figsize = (3*(len(selected_index)),20), dpi = 200)
+    # fig, axs = plt.subplots(len(selected_index),1, figsize = (3*(len(selected_index)),20), dpi = 200)
+    fig, axs = plt.subplots(4,1, figsize = (3*4,20), dpi = 200)
 
     modelsol= model(pulse, year,baseline,cearth)
 

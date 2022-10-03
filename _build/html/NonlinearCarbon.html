@@ -379,7 +379,7 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "b712be4b39f24d4f85369cfb8d58a9b0"}
+{"version_major": 2, "version_minor": 0, "model_id": "80da7dfb1b8b4c88b7f1ef7158add469"}
 </script></div>
 </div>
 <div class="cell docutils container">
@@ -397,7 +397,7 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "5a7323cd6248440085bc0e308a99b4bb"}
+{"version_major": 2, "version_minor": 0, "model_id": "b3a5d62956d241f0a275b7441a353ce5"}
 </script></div>
 </div>
 <div class="cell docutils container">
@@ -418,8 +418,8 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="ne">C</span>:\Users\ALIENW~1\AppData\Local\Temp/ipykernel_24256/2071115236.py in &lt;module&gt;
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="ne">C</span>:\Users\ALIENW~1\AppData\Local\Temp/ipykernel_27276/2071115236.py in &lt;module&gt;
 <span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="c1">#     print(j+1)</span>
 <span class="g g-Whitespace">      </span><span class="mi">7</span> 
 <span class="ne">----&gt; </span><span class="mi">8</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_simulation</span><span class="p">(</span><span class="n">pulsesize</span><span class="p">,</span> <span class="n">pulseyear</span><span class="p">,</span><span class="n">pulsebaseline</span><span class="p">,</span><span class="n">pulsecearth</span><span class="p">,</span> <span class="n">selected_index</span><span class="p">)</span>
@@ -427,50 +427,13 @@ title="Print to PDF"
 <span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
 <span class="nn">~\QuantClimateChange\Module_plot.py</span> in <span class="ni">plot_simulation</span><span class="nt">(pulse, year, baseline, cearth, selected_index)</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span>     <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">selected_index</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">selected_index</span><span class="p">)),</span><span class="mi">20</span><span class="p">),</span> <span class="n">dpi</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">25</span> 
-<span class="ne">---&gt; </span><span class="mi">26</span>     <span class="n">modelsol</span><span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">pulse</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span><span class="n">baseline</span><span class="p">,</span><span class="n">cearth</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">27</span> 
 <span class="g g-Whitespace">     </span><span class="mi">28</span>     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">selected_index</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> 
+<span class="ne">---&gt; </span><span class="mi">30</span>         <span class="n">axs</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">modelsol</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">modelsol</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;cearth=</span><span class="si">{</span><span class="n">cearth</span><span class="si">}</span><span class="s2">,pulse=</span><span class="si">{</span><span class="n">pulse</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">31</span>         <span class="n">axs</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">ylabels</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+<span class="g g-Whitespace">     </span><span class="mi">32</span>         <span class="n">axs</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">titles</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
 
-<span class="nn">~\QuantClimateChange\Module_model.py</span> in <span class="ni">model</span><span class="nt">(pulse, year, baseline, cearth)</span>
-<span class="g g-Whitespace">    </span><span class="mi">427</span>     <span class="n">init</span> <span class="o">=</span> <span class="p">[</span><span class="n">Ts</span><span class="p">,</span> <span class="n">Cs</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">428</span>     <span class="n">t_eval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tspan</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">429</span>     <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">dydt</span><span class="p">,</span> <span class="n">t_eval</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">init</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t_eval</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;RK45&#39;</span><span class="p">,</span> <span class="n">max_step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">430</span>     <span class="c1">#sol = solve_ivp(dydt, t_eval[[0, -1]], init, t_eval=t_eval, method=&#39;BDF&#39;)</span>
-<span class="g g-Whitespace">    </span><span class="mi">431</span> 
-
-<span class="nn">C:\ProgramData\Anaconda3\lib\site-packages\scipy\integrate\_ivp\ivp.py</span> in <span class="ni">solve_ivp</span><span class="nt">(fun, t_span, y0, method, t_eval, dense_output, events, vectorized, args, **options)</span>
-<span class="g g-Whitespace">    </span><span class="mi">574</span>     <span class="n">status</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="g g-Whitespace">    </span><span class="mi">575</span>     <span class="k">while</span> <span class="n">status</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">576</span>         <span class="n">message</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">577</span> 
-<span class="g g-Whitespace">    </span><span class="mi">578</span>         <span class="k">if</span> <span class="n">solver</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;finished&#39;</span><span class="p">:</span>
-
-<span class="nn">C:\ProgramData\Anaconda3\lib\site-packages\scipy\integrate\_ivp\base.py</span> in <span class="ni">step</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">179</span>         <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">180</span>             <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span>
-<span class="ne">--&gt; </span><span class="mi">181</span>             <span class="n">success</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_step_impl</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">182</span> 
-<span class="g g-Whitespace">    </span><span class="mi">183</span>             <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
-
-<span class="nn">C:\ProgramData\Anaconda3\lib\site-packages\scipy\integrate\_ivp\rk.py</span> in <span class="ni">_step_impl</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">142</span>             <span class="n">h_abs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">143</span> 
-<span class="ne">--&gt; </span><span class="mi">144</span>             <span class="n">y_new</span><span class="p">,</span> <span class="n">f_new</span> <span class="o">=</span> <span class="n">rk_step</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">145</span>                                    <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">C</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">146</span>             <span class="n">scale</span> <span class="o">=</span> <span class="n">atol</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">y_new</span><span class="p">))</span> <span class="o">*</span> <span class="n">rtol</span>
-
-<span class="nn">C:\ProgramData\Anaconda3\lib\site-packages\scipy\integrate\_ivp\rk.py</span> in <span class="ni">rk_step</span><span class="nt">(fun, t, y, f, h, A, B, C, K)</span>
-<span class="g g-Whitespace">     </span><span class="mi">61</span>     <span class="n">K</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span>
-<span class="g g-Whitespace">     </span><span class="mi">62</span>     <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">:]),</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-<span class="ne">---&gt; </span><span class="mi">63</span>         <span class="n">dy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">K</span><span class="p">[:</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">a</span><span class="p">[:</span><span class="n">s</span><span class="p">])</span> <span class="o">*</span> <span class="n">h</span>
-<span class="g g-Whitespace">     </span><span class="mi">64</span>         <span class="n">K</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="n">c</span> <span class="o">*</span> <span class="n">h</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">dy</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">65</span> 
-
-<span class="nn">&lt;__array_function__ internals&gt;</span> in <span class="ni">dot</span><span class="nt">(*args, **kwargs)</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
+<span class="ne">TypeError</span>: &#39;AxesSubplot&#39; object is not subscriptable
 </pre></div>
 </div>
 <img alt="_images/NonlinearCarbon_3_1.png" src="_images/NonlinearCarbon_3_1.png" />
