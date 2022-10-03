@@ -33,6 +33,12 @@ binder:
   binderhub_url: "https://mybinder.org"
   text: "Launch binder"
 
+parse:
+  myst_enable_extensions:
+    - colon_fence
+    - dollarmath
+    - amsmath
+
 
 # # Define the name of the latex output file for PDF builds
 # latex:
@@ -40,6 +46,6 @@ binder:
 #     targetname: book.tex
 
 # Add a bibtex file so that we can create citations
-bibtex_bibfiles:
-  - references.bib
+# bibtex_bibfiles:
+#   - references.bib
 
