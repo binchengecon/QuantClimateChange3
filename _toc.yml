@@ -3,7 +3,7 @@
 
 format: jb-article
 root: intro
-chapters:
+sections:
 # - file: markdown
 # - file: notebooks
 # - file: markdown-notebooks
