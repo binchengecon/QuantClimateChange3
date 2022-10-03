@@ -20,7 +20,7 @@ from scipy import fft, arange, signal
 #### INPUT PARAMETERS
 
 
-def model(pulse , year, cearth=0.3916,baseline = "rcp60co2eqv3"):
+def model(pulse , year, cearth=0.3916, baseline = "rcp60co2eqv3.csv"):
     ## heat capacity, incoming radiation
     # Earth heat capacity
     # cearth = 0.3916
@@ -97,8 +97,8 @@ def model(pulse , year, cearth=0.3916,baseline = "rcp60co2eqv3"):
     # Switch to take anthropogenic emissions
     sa = 1
     # Anthropogenic emissions (zero or one)
-    Can = pd.read_csv("rcp00co2eqv3.csv")
-    Can = pd.read_csv("rcp60co2eqv3.csv")
+    # csvname = baseline+'.csv'
+    Can = pd.read_csv(baseline)
     #Can = pd.read_csv("Et-sim2.csv")
     #times2co2eq
     #rcp85co2eq.csv
@@ -113,6 +113,7 @@ def model(pulse , year, cearth=0.3916,baseline = "rcp60co2eqv3"):
     Ca = Ca - 281.69873
     Ca = Ca.to_numpy()
 
+    Ca[year-1800]+=pulse
 
     tspan = len(Ca)
 
@@ -403,10 +404,10 @@ def model(pulse , year, cearth=0.3916,baseline = "rcp60co2eqv3"):
     Ts = 286.45
     Cs = 269
 
-    length = 100
+    length = 1000
     init = [Ts, Cs]
     t_eval = np.linspace(0, tspan, length)
-    sol = solve_ivp(dydt, t_eval[[0, -1]], init, t_eval=t_eval, method='RK45', max_step=0.1)
+    sol = solve_ivp(dydt, t_eval[[0, -1]], init, t_eval=t_eval, method='RK45', max_step=1)
     #sol = solve_ivp(dydt, t_eval[[0, -1]], init, t_eval=t_eval, method='BDF')
 
     #Extract values of temperature and C02
@@ -429,39 +430,54 @@ def model(pulse , year, cearth=0.3916,baseline = "rcp60co2eqv3"):
     # Total atmospheric carbon
     Ct = Cv + VCvegoptlow(t_eval)
 
-    modelsol = [tv, Tvmid, Cv, Ct]
+    modelsol = [tv, Tvmid, Cv, Ct, Tvmid]
     return modelsol
 
 
 
 
 
-modelsol = model(pulse=0,year=0,cearth=0.3916,baseline = "rcp60co2eqv3")
 ## plot from 1800 to 2400
 
-# tv2 = np.linspace(1800, 2800, 100000)
-plt.figure(figsize=(10, 5))
-#plt.plot(tv, Tvmid)
-plt.plot(modelsol[0], modelsol[1])
-plt.tick_params(axis='both', which='major', labelsize=18)
-plt.xlabel('Time (year)',fontsize = 18);
-plt.ylabel('Temperature annomaly (K)',fontsize = 18);
-plt.grid(linestyle=':')
-
-plt.show()
-## plot from 1800 to 1860
+colors = ['blue', 'green', 'red', 'gold', 'cyan', 'magenta', 'yellow', 'salmon', 'grey', 'black']
+titles = ['Temperature Anomaly T', 'Carbon Concentration Dynamics C', 'Carbon Emission G', 'Impulse Response Function']
+ylabels = ['Temperature (K)', 'Carbon (ppm)', 'Emission (Gtc)', 'Degree (Celsius)']
+# fig, axs = plt.subplots(len(selected_index),1, figsize = (3*(len(selected_index)),20), dpi = 200)
+fig, axs = plt.subplots(4,1, figsize = (3*4,20), dpi = 200)
 
 
 
-# ## plot of carbon concentration (from flux) from 1800 to 2400
+ceartharray=np.array((0.3725,15))
+pulsearray = np.arange(0,60,2)
+baselinearray = ["rcp60co2eqv3.csv", "rcp00co2eqv3.csv"]
 
-# # tv2 = np.linspace(1800, 2800, 100000)
-# plt.figure(figsize=(10, 5))
-# #plt.plot(tv, Tvmid)
-# plt.plot(tv, Ct)
-# plt.tick_params(axis='both', which='major', labelsize=18)
-# plt.xlabel('Time (year)',fontsize = 18);
-# plt.ylabel('Carbon concentration (ppm)',fontsize = 18);
-# plt.grid(linestyle=':')
+# Figure_Dir = "./nonlinearCarbon/figure/pulse_average/"
+Figure_Dir = "./figure/NC_PulseExp/"
+year = 1801
 
-# plt.show()
+for baseline in baselinearray:
+
+    for cearth in ceartharray:
+
+        modelsolBase = model(pulse=0,year=year,cearth=cearth,baseline = baseline)
+
+        for pulse in pulsearray:
+
+            modelsol= model(pulse, year,cearth,baseline)
+            print(baseline,cearth,pulse)
+            for j in range(4):
+
+                axs[j].plot(modelsol[0], modelsol[j+1],color=colors[j%len(colors)], label=f"cearth={cearth},pulse={pulse}")
+                axs[j].set_ylabel(ylabels[j])
+                axs[j].set_title(titles[j])
+                axs[j].set_xlabel('Year')
+                axs[j].legend(loc = 'lower right')
+
+
+            plt.tight_layout()
+            plt.savefig(Figure_Dir+"Baseline="+baseline+",cearth" +
+                        str(cearth)+",year"+str(year)+",pulse="+str(pulse)+".pdf")
+            plt.savefig(Figure_Dir+"Baseline="+baseline+",cearth=" +
+                        str(cearth)+",year"+str(year)+",pulse="+str(pulse)+".png")
+            # plt.show()
+            plt.close()
