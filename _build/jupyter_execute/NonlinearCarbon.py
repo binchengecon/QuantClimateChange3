@@ -13,7 +13,7 @@ from Module_plot import *
 import warnings
 warnings.filterwarnings('ignore')
 
-# display(fixed_params_Panel)
+display(Param_Panel)
 
 
 # In[2]:

@@ -57,7 +57,7 @@ pulse_size = widgets.BoundedFloatText( ## risk free rate
     max = 100,
     step=0.5,
     disabled=False,
-    description = 'pulsesize',
+    description = 'Size of Pulse',
     style = style_med,
     layout = layout_med
 )
@@ -69,7 +69,7 @@ pulse_year = widgets.BoundedFloatText( ## risk free rate
     max = 2800,
     step=10,
     disabled=False,
-    description = 'pulseyear',
+    description = 'Year of Pulse',
     style = style_med,
     layout = layout_med
 )
@@ -100,8 +100,8 @@ box_layout       = Layout(width='100%', flex_flow = 'row')#, justify_content='sp
 box_layout_wide  = Layout(width='100%', justify_content='space-between')
 box_layout_small = Layout(width='10%')
 
-box = VBox([widgets.Label(value="Pulse"), pulse_size, pulse_year], layout = Layout(width='90%'))
+Box_pulse = VBox([widgets.Label(value="Pulse"), pulse_size, pulse_year,pulse_baseline,cearth], layout = Layout(width='90%'))
 
 
-line1      = HBox([box], layout = box_layout)
+line1      = HBox([Box_pulse], layout = box_layout)
 Param_Panel = VBox([line1])
