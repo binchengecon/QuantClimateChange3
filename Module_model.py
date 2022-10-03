@@ -7,7 +7,26 @@ from matplotlib import pyplot as plt
 from matplotlib import rcParams
 from matplotlib.colors import SymLogNorm
 import matplotlib.mlab
-
+try: 
+    import scipy.optimize as optim
+    from scipy.optimize import curve_fit
+    from scipy import interpolate
+    from scipy import fft, arange, signal
+    import scipy.io as sio
+    from scipy.integrate import solve_ivp
+    from scipy.fft import fft, fftfreq
+except ImportError:
+    print("Installing scipy. This may take a while.")
+    from pip._internal import main as pipmain
+    pipmain(['install', 'scipy'])
+    import scipy.optimize as optim
+    from scipy.optimize import curve_fit
+    from scipy import interpolate
+    from scipy import fft, arange, signal
+    import scipy.io as sio
+    from scipy.integrate import solve_ivp
+    from scipy.fft import fft, fftfreq
+    
 try:
     import pandas as pd
 except ImportError:

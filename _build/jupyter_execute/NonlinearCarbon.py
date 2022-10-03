@@ -6,8 +6,8 @@
 # In[1]:
 
 
-from Module_model import *
 from Module_widget import *
+from Module_model import *
 from Module_plot import *
 
 import warnings
