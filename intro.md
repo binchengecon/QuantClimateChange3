@@ -1,11 +1,7 @@
-# Welcome to your Jupyter Book
+# Stochastic Growth and Long-Run Risk 
 
-This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out [the Jupyter Book documentation](https://jupyterbook.org) for more information.
 
-Check out the content pages bundled with this sample book to see more.
+This notebook serves as an example from {cite:ps}`hansen2021risk`. It displays computational results of a permanent income model. This model is a version of Friedman's permanent income model, where habit persistence preferences, motivated by {cite:ts}`hansen1999robust`, is considered. The model is approximately solved using a small noise expansion technique as in {cite:ts}`lombardouhlig`.
 
-```{tableofcontents}
-```
+This notebook is mainly for illustration of model specific results. If interested in more general computation details, users can refer to the Computational Details notebook accompanying this notebook.
+
