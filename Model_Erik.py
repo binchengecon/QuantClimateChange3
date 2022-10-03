@@ -403,7 +403,7 @@ def model(pulse , year, cearth=0.3916,baseline = "rcp60co2eqv3"):
     Ts = 286.45
     Cs = 269
 
-    length = 100000
+    length = 100
     init = [Ts, Cs]
     t_eval = np.linspace(0, tspan, length)
     sol = solve_ivp(dydt, t_eval[[0, -1]], init, t_eval=t_eval, method='RK45', max_step=0.1)
@@ -429,38 +429,39 @@ def model(pulse , year, cearth=0.3916,baseline = "rcp60co2eqv3"):
     # Total atmospheric carbon
     Ct = Cv + VCvegoptlow(t_eval)
 
-    return tv, Tvmid, Cv, Ct
+    modelsol = [tv, Tvmid, Cv, Ct]
+    return modelsol
 
 
 
 
 
-tv, Tvmid, Cv,Ct = model(pulse=0,year=0,cearth=0.3916,baseline = "rcp60co2eqv3")
+modelsol = model(pulse=0,year=0,cearth=0.3916,baseline = "rcp60co2eqv3")
 ## plot from 1800 to 2400
 
 # tv2 = np.linspace(1800, 2800, 100000)
 plt.figure(figsize=(10, 5))
 #plt.plot(tv, Tvmid)
-plt.plot(tv, Tvmid)
+plt.plot(modelsol[0], modelsol[1])
 plt.tick_params(axis='both', which='major', labelsize=18)
 plt.xlabel('Time (year)',fontsize = 18);
 plt.ylabel('Temperature annomaly (K)',fontsize = 18);
 plt.grid(linestyle=':')
 
-
+plt.show()
 ## plot from 1800 to 1860
 
 
 
-## plot of carbon concentration (from flux) from 1800 to 2400
+# ## plot of carbon concentration (from flux) from 1800 to 2400
 
-# tv2 = np.linspace(1800, 2800, 100000)
-plt.figure(figsize=(10, 5))
-#plt.plot(tv, Tvmid)
-plt.plot(tv, Ct)
-plt.tick_params(axis='both', which='major', labelsize=18)
-plt.xlabel('Time (year)',fontsize = 18);
-plt.ylabel('Carbon concentration (ppm)',fontsize = 18);
-plt.grid(linestyle=':')
+# # tv2 = np.linspace(1800, 2800, 100000)
+# plt.figure(figsize=(10, 5))
+# #plt.plot(tv, Tvmid)
+# plt.plot(tv, Ct)
+# plt.tick_params(axis='both', which='major', labelsize=18)
+# plt.xlabel('Time (year)',fontsize = 18);
+# plt.ylabel('Carbon concentration (ppm)',fontsize = 18);
+# plt.grid(linestyle=':')
 
-plt.show()
+# plt.show()

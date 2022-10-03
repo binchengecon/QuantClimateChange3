@@ -96,6 +96,18 @@ cearth = widgets.BoundedFloatText( ## risk free rate
     layout = layout_med
 )
 
+runSim = widgets.Button(
+    description='Run simulation',
+    disabled=False,
+    button_style='', # 'success', 'info', 'warning', 'danger' or ''
+)
+
+# runSlider = widgets.Button(
+#     description='Run models',
+#     disabled=False,
+#     button_style='', # 'success', 'info', 'warning', 'danger' or ''
+# )
+
 box_layout       = Layout(width='100%', flex_flow = 'row')#, justify_content='space-between')
 box_layout_wide  = Layout(width='100%', justify_content='space-between')
 box_layout_small = Layout(width='10%')
@@ -105,3 +117,18 @@ Box_pulse = VBox([widgets.Label(value="Pulse"), pulse_size, pulse_year,pulse_bas
 
 line1      = HBox([Box_pulse], layout = box_layout)
 Param_Panel = VBox([line1])
+
+sim_var_names_external = ['Temperature Anomaly', 'Carbon Concentration Dynamics', 'Carbon Emission', 'Impulse Response Function']
+
+simulate_external = widgets.SelectMultiple(options = sim_var_names_external,
+    value = ['Temperature Anomaly'],
+    rows = len(sim_var_names_external),
+    disabled = False
+)
+
+simulate_box_external = VBox([widgets.Label(value="Select variables to simulate:"),simulate_external], layout = Layout(width='100%'))
+
+run_box_sim = VBox([widgets.Label(value="Run simulation"), runSim], layout = Layout(width='100%'))
+
+simulate_box_external_run = HBox([simulate_box_external, run_box_sim], layout = Layout(width='100%'))
+

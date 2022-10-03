@@ -429,7 +429,11 @@ def model(pulse, year, baseline,cearth=0.3916):
 
     # Total atmospheric carbon
     Ct = Cv + VCvegoptlow(t_eval)
+    Cc_print = Ycm(tv)
+    modelsol = [tv+1800, Tvmid, Ct, Cc_print, Tvmid]
 
-    return tv, Tvmid, Cv, Ct
+    
+    return modelsol
+
 
 

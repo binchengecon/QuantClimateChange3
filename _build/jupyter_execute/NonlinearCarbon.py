@@ -27,4 +27,6 @@ display(Param_Panel)
 # plt.xlabel('Time (year)',fontsize = 18);
 # plt.ylabel('Carbon concentration (ppm)',fontsize = 18);
 # plt.grid(linestyle=':')
+# plt.savefig("test.png")
+Image("test.png")
 
