@@ -10,14 +10,11 @@ logo: mfr.svg
 execute:
   execute_notebooks: force
 
-# # Define the name of the latex output file for PDF builds
-# latex:
-#   latex_documents:
-#     targetname: book.tex
-
-# Add a bibtex file so that we can create citations
-bibtex_bibfiles:
-  - references.bib
+# Add GitHub buttons to your book
+# See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
+html:
+  use_issues_button: true
+  use_repository_button: true
 
 # Information about where the book exists on the web
 repository:
@@ -27,8 +24,10 @@ repository:
 
 launch_buttons:
   binderhub_url: "https://mybinder.org"
-  thebe: true
-  colab_url: "https://colab.research.google.com"
+  # thebe: true
+  # colab_url: "https://colab.research.google.com"
+  # notebook_interface: "jupyterlab"  # or "classic"
+
 
 
 binder:
@@ -36,9 +35,12 @@ binder:
   text: "Launch binder"
 
 
-# Add GitHub buttons to your book
-# See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
-html:
-  use_issues_button: true
-  use_repository_button: true
+# # Define the name of the latex output file for PDF builds
+# latex:
+#   latex_documents:
+#     targetname: book.tex
+
+# Add a bibtex file so that we can create citations
+bibtex_bibfiles:
+  - references.bib
 
