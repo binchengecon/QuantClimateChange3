@@ -415,8 +415,8 @@ def model(pulse, year, cearth=0.3916, baseline="rcp60co2eqv3.csv"):
 
     # Total atmospheric carbon
     Ct = Cv + VCvegoptlow(t_eval)
-
-    modelsol = [tv, Tvmid, Cv, Ct, Tvmid]
+    G = Ycm(t_eval)
+    modelsol = [tv+1800, Tvmid, Ct, G, Tvmid]
     return modelsol
 
 
@@ -428,41 +428,55 @@ titles = ['Temperature Anomaly T', 'Carbon Concentration Dynamics C',
 ylabels = ['Temperature (K)', 'Carbon (ppm)',
            'Emission (Gtc)', 'Degree (Celsius)']
 # fig, axs = plt.subplots(len(selected_index),1, figsize = (3*(len(selected_index)),20), dpi = 200)
-fig, axs = plt.subplots(4, 1, figsize=(3*4, 20), dpi=200)
 
-
-ceartharray = np.array((0.3725, 15))
-pulsearray = np.arange(0, 60, 1)
-baselinearray = ["rcp60co2eqv3.csv", "rcp00co2eqv3.csv"]
-
+ceartharray = np.array((0.3725, 0.3916, 15))
+pulsearray = np.arange(0, 100, 1)
+baselinearray = ["carbonvoid.csv", "rcp60co2eqv3.csv", "rcp00co2eqv3.csv"]
+yeararray = np.array((1801, 2010))
 # Figure_Dir = "./nonlinearCarbon/figure/pulse_average/"
 Figure_Dir = "./figure/NC_PulseExp/"
-year = 1801
+# year = 1801
 
-for baseline in baselinearray:
+# cearth = 0.3725
+# pulse = 1
+# baseline = "rcp60co2eqv3.csv"
 
-    for cearth in ceartharray:
+# model(pulse, year, cearth, baseline)
 
-        modelsolBase = model(pulse=0, year=year,
-                             cearth=cearth, baseline=baseline)
+for year in yeararray:
 
-        for pulse in pulsearray:
+    for baseline in baselinearray:
 
-            modelsol = model(pulse, year, cearth, baseline)
-            print(baseline, cearth, pulse)
-            for j in range(4):
+        for cearth in ceartharray:
 
-                axs[j].plot(modelsol[0], modelsol[j+1], color=colors[j %
-                            len(colors)], label=f"cearth={cearth},pulse={pulse}")
-                axs[j].set_ylabel(ylabels[j])
-                axs[j].set_title(titles[j])
-                axs[j].set_xlabel('Year')
-                axs[j].legend(loc='lower right')
+            modelsolBase = model(pulse=0, year=year,
+                                 cearth=cearth, baseline=baseline)
 
-            plt.tight_layout()
-            plt.savefig(Figure_Dir+"Baseline="+baseline+",cearth" +
-                        str(cearth)+",year"+str(year)+",pulse="+str(pulse)+".pdf")
-            plt.savefig(Figure_Dir+"Baseline="+baseline+",cearth=" +
-                        str(cearth)+",year"+str(year)+",pulse="+str(pulse)+".png")
-            # plt.show()
-            plt.close()
+            for pulse in pulsearray:
+
+                fig, axs = plt.subplots(4, 1, figsize=(3*4, 20))
+
+                modelsol = model(pulse, year, cearth, baseline)
+
+                print(baseline, cearth, pulse)
+
+                for j in range(4):
+
+                    if (j < 3):
+                        axs[j].plot(modelsol[0], modelsol[j+1], color=colors[j %
+                                                                             len(colors)], label=f"cearth={cearth},pulse={pulse}")
+                    else:
+                        axs[j].plot(modelsol[0], modelsol[j+1]-modelsolBase[j+1], color=colors[j %
+                                    len(colors)], label=f"cearth={cearth},pulse={pulse}")
+                    axs[j].set_ylabel(ylabels[j])
+                    axs[j].set_title(titles[j])
+                    axs[j].set_xlabel('Year')
+                    axs[j].legend(loc='lower right')
+
+                plt.tight_layout()
+                # plt.savefig(Figure_Dir+"Baseline="+baseline+",cearth" +
+                #             str(cearth)+",year"+str(year)+",pulse="+str(pulse)+".pdf")
+                plt.savefig(Figure_Dir+"Baseline="+baseline+",cearth=" +
+                            str(cearth)+",year="+str(year)+",pulse="+str(pulse)+".png")
+                # plt.show()
+                plt.close()

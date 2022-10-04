@@ -9,7 +9,7 @@ for the model framework. The widgets are purely for decorative purposes.
 #                    Dependencies                     #
 #######################################################
 
-
+from ipywidgets import interact
 from ipywidgets import widgets, Layout, Button, HBox, VBox, interactive
 from IPython.core.display import display
 from IPython.display import clear_output, Markdown, Latex
@@ -17,8 +17,7 @@ from IPython.display import Javascript
 import numpy as np
 
 
-
-try: 
+try:
     import scipy.optimize as optim
     from scipy.optimize import curve_fit
     from scipy import interpolate
@@ -50,7 +49,6 @@ except ImportError:
     from plotly.offline import init_notebook_mode, iplot
 
 
-
 # Define global parameters for parameter checks
 params_pass = False
 model_solved = False
@@ -60,75 +58,75 @@ model_solved = False
 #          Jupyter widgets for user inputs            #
 #######################################################
 
-## This section creates the widgets that will be diplayed and used by the user
-## to input parameter values.
+# This section creates the widgets that will be diplayed and used by the user
+# to input parameter values.
 
 style_mini = {'description_width': '5px'}
 style_short = {'description_width': '100px'}
 style_med = {'description_width': '180px'}
 style_long = {'description_width': '200px'}
 
-layout_mini =Layout(width='18.75%')
-layout_50 =Layout(width='50%')
-layout_med =Layout(width='70%')
+layout_mini = Layout(width='18.75%')
+layout_50 = Layout(width='50%')
+layout_med = Layout(width='70%')
 
-widget_layout = Layout(width = '100%')
+widget_layout = Layout(width='100%')
 
-pulse_size = widgets.BoundedFloatText( ## risk free rate
+pulse_size = widgets.BoundedFloatText(  # risk free rate
     value=10,
-    min = 0,
-    max = 100,
+    min=0,
+    max=100,
     step=0.5,
     disabled=False,
-    description = 'Size of Pulse',
-    style = style_med,
-    layout = layout_med
+    description='Size of Pulse',
+    style=style_med,
+    layout=layout_med
 )
 
 
-pulse_year = widgets.BoundedFloatText( ## risk free rate
+pulse_year = widgets.BoundedFloatText(  # risk free rate
     value=1801,
-    min = 1800,
-    max = 2800,
+    min=1800,
+    max=2800,
     step=10,
     disabled=False,
-    description = 'Year of Pulse',
-    style = style_med,
-    layout = layout_med
+    description='Year of Pulse',
+    style=style_med,
+    layout=layout_med
 )
 
 
 pulse_baseline = widgets.Dropdown(
-    options = {"rcp00co2eqv3", "rcp60co2eqv3"},
+    options={"rcp00co2eqv3", "rcp60co2eqv3"},
     # value = 1,
     description='Carbon Concentration Baseline:',
     disabled=False,
-    style = style_med,
-    layout = layout_med
+    style=style_med,
+    layout=layout_med
 )
 
 
-cearth = widgets.BoundedFloatText( ## risk free rate
+cearth = widgets.BoundedFloatText(  # risk free rate
     value=0.3916,
-    min = 0.33,
-    max = 20,
+    min=0.33,
+    max=20,
     step=0.01,
     disabled=False,
-    description = 'Heat Capacity',
-    style = style_med,
-    layout = layout_med
+    description='Heat Capacity',
+    style=style_med,
+    layout=layout_med
 )
 
 checkParams = widgets.Button(
     description='Update parameters',
     disabled=False,
-    button_style='', # 'success', 'info', 'warning', 'danger' or ''
+    button_style='',  # 'success', 'info', 'warning', 'danger' or ''
 )
 
 runSim = widgets.Button(
     description='Run simulation',
     disabled=False,
-    button_style='', # 'success', 'info', 'warning', 'danger' or ''
+    button_style='',  # 'success', 'info', 'warning', 'danger' or ''
 )
 
 # runSlider = widgets.Button(
@@ -137,36 +135,44 @@ runSim = widgets.Button(
 #     button_style='', # 'success', 'info', 'warning', 'danger' or ''
 # )
 
-box_layout       = Layout(width='100%', flex_flow = 'row')#, justify_content='space-between')
-box_layout_wide  = Layout(width='100%', justify_content='space-between')
+# , justify_content='space-between')
+box_layout = Layout(width='100%', flex_flow='row')
+box_layout_wide = Layout(width='100%', justify_content='space-between')
 box_layout_small = Layout(width='10%')
 
-Box_pulse = VBox([widgets.Label(value="Pulse"), pulse_size, pulse_year,pulse_baseline,cearth], layout = Layout(width='90%'))
+Box_pulse = VBox([widgets.Label(value="Pulse"), pulse_size,
+                 pulse_year, pulse_baseline, cearth], layout=Layout(width='90%'))
 
 
-line1      = HBox([Box_pulse], layout = box_layout)
+line1 = HBox([Box_pulse], layout=box_layout)
 Param_Panel = VBox([line1])
 
-sim_var_names_external = ['Temperature Anomaly', 'Carbon Concentration Dynamics', 'Carbon Emission', 'Impulse Response Function']
+sim_var_names_external = ['Temperature Anomaly', 'Carbon Concentration Dynamics',
+                          'Carbon Emission', 'Impulse Response Function']
 
-simulate_external = widgets.SelectMultiple(options = sim_var_names_external,
-    value = ['Temperature Anomaly'],
-    rows = len(sim_var_names_external),
-    disabled = False
-)
+simulate_external = widgets.SelectMultiple(options=sim_var_names_external,
+                                           value=['Temperature Anomaly'],
+                                           rows=len(sim_var_names_external),
+                                           disabled=False
+                                           )
 
-simulate_box_external = VBox([widgets.Label(value="Select variables to simulate:"),simulate_external], layout = Layout(width='100%'))
+simulate_box_external = VBox([widgets.Label(
+    value="Select variables to simulate:"), simulate_external], layout=Layout(width='100%'))
 
-run_box_sim = VBox([widgets.Label(value="Run simulation"),checkParams, runSim], layout = Layout(width='100%'))
+run_box_sim = VBox([widgets.Label(value="Run simulation"),
+                   checkParams, runSim], layout=Layout(width='100%'))
 
-simulate_box_external_run = HBox([simulate_box_external, run_box_sim], layout = Layout(width='100%'))
+simulate_box_external_run = HBox(
+    [simulate_box_external, run_box_sim], layout=Layout(width='100%'))
+
 
 def checkParamsFn(b):
-    ## This is the function triggered by the updateParams button. It will
-    ## check dictionary params to ensure that adjustment costs are well-specified.
-    clear_output() ## clear the output of the existing print-out
+    # This is the function triggered by the updateParams button. It will
+    # check dictionary params to ensure that adjustment costs are well-specified.
+    clear_output()  # clear the output of the existing print-out
     display(Javascript("Jupyter.notebook.execute_cells([2])"))
-    display(simulate_box_external_run) ## after clearing output, re-display buttons
+    # after clearing output, re-display buttons
+    display(simulate_box_external_run)
 
     global params_pass
     global model_solved
@@ -193,7 +199,7 @@ def checkParamsFn(b):
 #     else:
 #         params_pass = True
 #         print("Parameter check passed.")
-        
+
 # def runSimFn(b):
 #     ## This is the function triggered by the runSim button.
 #     global model_solved

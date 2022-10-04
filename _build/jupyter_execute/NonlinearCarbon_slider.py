@@ -14,7 +14,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 display(Param_Panel)
-display(simulate_box_external_run)
+# display(simulate_box_external_run)
 
 
 # In[2]:
