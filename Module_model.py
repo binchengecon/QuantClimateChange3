@@ -33,6 +33,8 @@ except ImportError:
     print("Installing pandas. This may take a while.")
     from pip._internal import main as pipmain
     pipmain(['install', 'pandas'])
+    import pandas as pd
+
 
 # os.chdir('/Users/erikchavez/Documents/Papers/Economic_Policy/C-T-dynamic-ODEs/')
 
