@@ -453,8 +453,8 @@ ylabels = ['Temperature (K)', 'Carbon (ppm)',
 
 # ceartharray = np.array((0.3725, 0.3916, 15))
 # pulsearray = np.arange(0, 100, 1)
-# baselinearray = ["carbonvoid.csv",  "rcp85co2eqv3.csv", "rcp60co2eqv3.csv",
-#                  "rcp45co2eqv3.csv", "rcp30co2eqv3.csv", "rcp00co2eqv3.csv"]
+baselinearray = ["carbonvoid.csv",  "rcp85co2eqv3.csv", "rcp60co2eqv3.csv",
+                 "rcp45co2eqv3.csv", "rcp30co2eqv3.csv", "rcp00co2eqv3.csv"]
 # yeararray = np.array((1801, 2010))
 # Figure_Dir = "./nonlinearCarbon/figure/pulse_average/"
 Figure_Dir = "./figure/NC_PulseExp/"
