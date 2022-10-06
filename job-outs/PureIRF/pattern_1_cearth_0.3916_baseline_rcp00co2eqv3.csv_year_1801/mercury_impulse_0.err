@@ -1,0 +1,4 @@
+/home/bcheng4/QuantClimateChange/Model_Erik_PureIRF_graphsize.py:492: RuntimeWarning: invalid value encountered in true_divide
+  axs[j].plot(modelsol[0], (modelsol[j+1]-modelsolBase[j+1])/impulse, color=colors[j %
+/home/bcheng4/QuantClimateChange/Model_Erik_PureIRF_graphsize.py:492: RuntimeWarning: invalid value encountered in true_divide
+  axs[j].plot(modelsol[0], (modelsol[j+1]-modelsolBase[j+1])/impulse, color=colors[j %

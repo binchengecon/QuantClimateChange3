@@ -1,0 +1,9 @@
+==========================================
+SLURM_JOB_ID = 10037576
+SLURM_SUBMIT_DIR = /home/bcheng4/QuantClimateChange
+SLURM_JOB_NODELIST = mcn59
+==========================================
+im_60
+Program starts Wed Oct  5 22:59:07 CDT 2022
+carbonvoid.csv 0.3916 6
+Program ends Wed Oct  5 22:59:38 CDT 2022
