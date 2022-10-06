@@ -30,7 +30,6 @@ mpl.rcParams["legend.frameon"] = False
 parser = argparse.ArgumentParser(description="graphparameters")
 parser.add_argument("--pattern", type=int)
 parser.add_argument("--title", type=str)
-parser.add_argument("--ylabel", type=str)
 parser.add_argument("--cearth", type=float)
 parser.add_argument("--impulse", type=int)
 parser.add_argument("--baseline", type=str)
@@ -449,8 +448,8 @@ colors = ['blue', 'green', 'red', 'gold', 'cyan',
           'magenta', 'yellow', 'salmon', 'grey', 'black']
 # titles = ['Impulse Response of Temperature Anomaly T',
 #           'Impulse Response of Carbon Concentration Dynamics C']
-# ylabels = ['Temperature (K)', 'Carbon (ppm)',
-#            'Emission (Gtc)', 'Degree (Celsius)']
+ylabels = ['Temperature (K)', 'Carbon (ppm)',
+           'Emission (Gtc)', 'Degree (Celsius)']
 # fig, axs = plt.subplots(len(selected_index),1, figsize = (3*(len(selected_index)),20), dpi = 200)
 
 # ceartharray = np.array((0.3725, 0.3916, 15))
@@ -463,7 +462,6 @@ Figure_Dir = "./figure/NC_PulseExp/"
 
 pattern = args.pattern
 title = args.title
-ylabel = args.ylabel
 cearth = args.cearth
 impulse = args.impulse
 baseline = args.baseline
@@ -488,7 +486,7 @@ for j in range(2):
     if pattern == 2:
         axs[j].plot(modelsol[0], (modelsol[j+1]-modelsolBase[j+1])*impulse/1000, color=colors[j %
                     len(colors)], label=f"cearth={cearth},pulse={impulse}")
-    axs[j].set_ylabel(ylabel)
+    axs[j].set_ylabel(ylabels[j])
     axs[j].set_title(title)
     if j == 1:
         axs[j].set_xlabel('Year')

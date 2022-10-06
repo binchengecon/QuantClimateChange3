@@ -17,36 +17,34 @@ count=0
 
 for title in ${titles[@]}
 do
-    for ylabel in ${ylabels[@]}
+    for cearth in ${ceartharray[@]}
     do
-        for cearth in ${ceartharray[@]}
+        for impulse in ${impulsearray[@]}
         do
-            for impulse in ${impulsearray[@]}
+            for baseline in ${baselinearray[@]}
             do
-                for baseline in ${baselinearray[@]}
+                for year in ${yeararray[@]}
                 do
-                    for year in ${yeararray[@]}
-                    do
-                        
-                        mkdir -p ./job-outs/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}/
-                        
-                        if [ -f ./bash/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh ]
-                        then
-                            rm ./bash/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
-                        fi
-                        
-                        mkdir -p ./bash/${action_name}/
-                        
-                        touch ./bash/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
-                        
-                        tee -a ./bash/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh << EOF
+                    
+                    mkdir -p ./job-outs/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}/
+                    
+                    if [ -f ./bash/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh ]
+                    then
+                        rm ./bash/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
+                    fi
+                    
+                    mkdir -p ./bash/${action_name}/
+                    
+                    touch ./bash/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
+                    
+                        tee -a ./bash/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh << EOF
 #! /bin/bash
 
 
 ######## login
 #SBATCH --job-name=impulse${actiontime}_$count
-#SBATCH --output=./job-outs/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}/mercury_impulse_${impulse}.out
-#SBATCH --error=./job-outs/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}/mercury_impulse_${impulse}.err
+#SBATCH --output=./job-outs/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}/mercury_impulse_${impulse}.out
+#SBATCH --error=./job-outs/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}/mercury_impulse_${impulse}.err
 
 
 #SBATCH --account=pi-lhansen
@@ -62,17 +60,17 @@ echo "\$SLURM_JOB_NAME"
 
 echo "Program starts \$(date)"
 
-python3 /home/bcheng4/QuantClimateChange/$python_name --pattern ${pattern} --title ${title} --ylabel ${ylabel} --cearth ${cearth} --impulse ${impulse} --baseline ${baseline} --year ${year}
+python3 /home/bcheng4/QuantClimateChange/$python_name --pattern ${pattern} --title ${title}  --cearth ${cearth} --impulse ${impulse} --baseline ${baseline} --year ${year}
 
 echo "Program ends \$(date)"
 
 EOF
-                        
-                        sbatch ./bash/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
-                        count=$(($count+1))
-                    done
+                    
+                    sbatch ./bash/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
+                    count=$(($count+1))
                 done
             done
+            
         done
     done
 done
@@ -95,36 +93,35 @@ pattern=1
 
 for title in ${titles[@]}
 do
-    for ylabel in ${ylabels[@]}
+    
+    for cearth in ${ceartharray[@]}
     do
-        for cearth in ${ceartharray[@]}
+        for impulse in ${impulsearray[@]}
         do
-            for impulse in ${impulsearray[@]}
+            for baseline in ${baselinearray[@]}
             do
-                for baseline in ${baselinearray[@]}
+                for year in ${yeararray[@]}
                 do
-                    for year in ${yeararray[@]}
-                    do
-                        
-                        mkdir -p ./job-outs/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}/
-                        
-                        if [ -f ./bash/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh ]
-                        then
-                            rm ./bash/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
-                        fi
-                        
-                        mkdir -p ./bash/${action_name}/
-                        
-                        touch ./bash/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
-                        
-                        tee -a ./bash/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh << EOF
+                    
+                    mkdir -p ./job-outs/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}/
+                    
+                    if [ -f ./bash/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh ]
+                    then
+                        rm ./bash/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
+                    fi
+                    
+                    mkdir -p ./bash/${action_name}/
+                    
+                    touch ./bash/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
+                    
+                        tee -a ./bash/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh << EOF
 #! /bin/bash
 
 
 ######## login
 #SBATCH --job-name=impulse${actiontime}_$count
-#SBATCH --output=./job-outs/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}/mercury_impulse_${impulse}.out
-#SBATCH --error=./job-outs/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}/mercury_impulse_${impulse}.err
+#SBATCH --output=./job-outs/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}/mercury_impulse_${impulse}.out
+#SBATCH --error=./job-outs/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}/mercury_impulse_${impulse}.err
 
 
 #SBATCH --account=pi-lhansen
@@ -140,17 +137,17 @@ echo "\$SLURM_JOB_NAME"
 
 echo "Program starts \$(date)"
 
-python3 /home/bcheng4/QuantClimateChange/$python_name --pattern ${pattern} --title ${title} --ylabel ${ylabel} --cearth ${cearth} --impulse ${impulse} --baseline ${baseline} --year ${year}
+python3 /home/bcheng4/QuantClimateChange/$python_name --pattern ${pattern} --title ${title}  --cearth ${cearth} --impulse ${impulse} --baseline ${baseline} --year ${year}
 
 echo "Program ends \$(date)"
 
 EOF
-                        
-                        sbatch ./bash/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
-                        count=$(($count+1))
-                    done
+                    
+                    sbatch ./bash/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
+                    count=$(($count+1))
                 done
             done
+            
         done
     done
 done
@@ -162,7 +159,6 @@ python_name="Model_Erik_PureIRF_graphsize.py"
 
 
 declare -a titles=('Impulse Response of Temperature Anomaly per Ttc' 'Impulse Response of Carbon Concentration Dynamics per Ttc')
-declare -a ylabels=('Temperature (K)' 'Carbon (ppm)' 'Emission (Gtc)' 'Degree (Celsius)')
 ceartharray=(0.3725 0.3916 15)
 impulsearray=($(seq 0 100 ))
 declare -a baselinearray = ("carbonvoid.csv" "rcp85co2eqv3.csv" "rcp60co2eqv3.csv" "rcp45co2eqv3.csv" "rcp30co2eqv3.csv" "rcp00co2eqv3.csv")
@@ -173,36 +169,35 @@ pattern=2
 
 for title in ${titles[@]}
 do
-    for ylabel in ${ylabels[@]}
+    
+    for cearth in ${ceartharray[@]}
     do
-        for cearth in ${ceartharray[@]}
+        for impulse in ${impulsearray[@]}
         do
-            for impulse in ${impulsearray[@]}
+            for baseline in ${baselinearray[@]}
             do
-                for baseline in ${baselinearray[@]}
+                for year in ${yeararray[@]}
                 do
-                    for year in ${yeararray[@]}
-                    do
-                        
-                        mkdir -p ./job-outs/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}/
-                        
-                        if [ -f ./bash/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh ]
-                        then
-                            rm ./bash/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
-                        fi
-                        
-                        mkdir -p ./bash/${action_name}/
-                        
-                        touch ./bash/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
-                        
-                        tee -a ./bash/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh << EOF
+                    
+                    mkdir -p ./job-outs/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}/
+                    
+                    if [ -f ./bash/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh ]
+                    then
+                        rm ./bash/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
+                    fi
+                    
+                    mkdir -p ./bash/${action_name}/
+                    
+                    touch ./bash/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
+                    
+                        tee -a ./bash/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh << EOF
 #! /bin/bash
 
 
 ######## login
 #SBATCH --job-name=impulse${actiontime}_$count
-#SBATCH --output=./job-outs/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}/mercury_impulse_${impulse}.out
-#SBATCH --error=./job-outs/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}/mercury_impulse_${impulse}.err
+#SBATCH --output=./job-outs/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}/mercury_impulse_${impulse}.out
+#SBATCH --error=./job-outs/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}/mercury_impulse_${impulse}.err
 
 
 #SBATCH --account=pi-lhansen
@@ -218,17 +213,17 @@ echo "\$SLURM_JOB_NAME"
 
 echo "Program starts \$(date)"
 
-python3 /home/bcheng4/QuantClimateChange/$python_name --pattern ${pattern} --title ${title} --ylabel ${ylabel} --cearth ${cearth} --impulse ${impulse} --baseline ${baseline} --year ${year}
+python3 /home/bcheng4/QuantClimateChange/$python_name --pattern ${pattern} --title ${title}  --cearth ${cearth} --impulse ${impulse} --baseline ${baseline} --year ${year}
 
 echo "Program ends \$(date)"
 
 EOF
-                        
-                        sbatch ./bash/${action_name}/pattern_${pattern}_title_${title}_ylabel_${ylabel}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
-                        count=$(($count+1))
-                    done
+                    
+                    sbatch ./bash/${action_name}/pattern_${pattern}_title_${title}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
+                    count=$(($count+1))
                 done
             done
         done
     done
+    
 done
