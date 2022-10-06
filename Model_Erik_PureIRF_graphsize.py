@@ -22,7 +22,7 @@ import argparse
 
 mpl.rcParams["lines.linewidth"] = 2.5
 mpl.rcParams["savefig.bbox"] = "tight"
-mpl.rcParams["figure.figsize"] = (16, 5)
+# mpl.rcParams["figure.figsize"] = (16, 5)
 mpl.rcParams["font.size"] = 18
 mpl.rcParams["legend.frameon"] = False
 
@@ -468,7 +468,7 @@ year = args.year
 modelsolBase = model(pulse=0, year=year,
                      cearth=cearth, baseline=baseline)
 
-fig, axs = plt.subplots(2, 1, figsize=(16, 10))
+fig, axs = plt.subplots(2, 1, figsize=(9, 9))
 
 modelsol = model(impulse, year, cearth, baseline)
 

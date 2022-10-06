@@ -22,7 +22,7 @@ import argparse
 
 mpl.rcParams["lines.linewidth"] = 2.5
 mpl.rcParams["savefig.bbox"] = "tight"
-mpl.rcParams["figure.figsize"] = (8, 5)
+# mpl.rcParams["figure.figsize"] = (8, 5)
 mpl.rcParams["font.size"] = 18
 mpl.rcParams["legend.frameon"] = False
 
@@ -469,7 +469,7 @@ year = 1801
 modelsolBase = model(pulse=0, year=year,
                      cearth=cearth, baseline=baseline)
 
-fig, axs = plt.subplots(2, 1, figsize=(16, 10))
+fig, axs = plt.subplots(2, 1, figsize=(9, 9))
 
 modelsol = model(impulse, year, cearth, baseline)
 
@@ -496,7 +496,7 @@ plt.tight_layout()
 #             str(cearth)+",year"+str(year)+",pulse="+str(pulse)+".pdf")
 if pattern == 0:
     plt.savefig(Figure_Dir+"Baseline="+baseline+",cearth=" +
-                str(cearth)+",year="+str(year)+",pulse="+str(impulse)+",2IRF.png")
+                str(cearth)+",year="+str(year)+",pulse="+str(impulse)+",2IRF2.png")
 if pattern == 1:
     plt.savefig(Figure_Dir+"Baseline="+baseline+",cearth=" +
                 str(cearth)+",year="+str(year)+",pulse="+str(impulse)+",2IRF,per.png")
