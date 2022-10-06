@@ -27,5 +27,8 @@ def image(pulse=(0, 99), cearth=np.array((0.3725, 0.3916, 15.0)), baseline=["rcp
     # cearth=15.0
     # year=1801
     filename = Figure_Dir+"Baseline="+baseline+",cearth=" +         str(cearth)+",year="+str(year)+",pulse="+str(pulse)+".png"
-    return Image.open(filename)
+    # return Image.open(filename)
+    userimage = Image.open(filename)
+    userimage_resize = userimage.resize((800, 1000))
+    return userimage_resize
 
