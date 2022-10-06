@@ -534,7 +534,8 @@ for year in yeararray:
                                 len(colors)], label=f"cearth={cearth},pulse={pulse}")
                     axs[j].set_ylabel(ylabels[j])
                     axs[j].set_title(titles[j])
-                    axs[j].set_xlabel('Year')
+                    if j == 1:
+                        axs[j].set_xlabel('Year')
                     axs[j].legend(loc='lower right')
 
                 plt.tight_layout()
@@ -586,7 +587,8 @@ for year in yeararray:
                                 len(colors)], label=f"cearth={cearth},pulse={pulse}")
                     axs[j].set_ylabel(ylabels[j])
                     axs[j].set_title(titles[j])
-                    axs[j].set_xlabel('Year')
+                    if j == 1:
+                        axs[j].set_xlabel('Year')
                     axs[j].legend(loc='lower right')
 
                 plt.tight_layout()

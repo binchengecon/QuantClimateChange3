@@ -17,11 +17,26 @@ from scipy import fft, arange, signal
 import matplotlib as mpl
 
 
+import argparse
+
+
 mpl.rcParams["lines.linewidth"] = 2.5
 mpl.rcParams["savefig.bbox"] = "tight"
 mpl.rcParams["figure.figsize"] = (8, 5)
 mpl.rcParams["font.size"] = 18
 mpl.rcParams["legend.frameon"] = False
+
+
+parser = argparse.ArgumentParser(description="graphparameters")
+parser.add_argument("--pattern", type=int)
+parser.add_argument("--title", type=str)
+parser.add_argument("--ylabel", type=str)
+parser.add_argument("--cearth", type=float)
+parser.add_argument("--impulse", type=int)
+parser.add_argument("--baseline", type=str)
+parser.add_argument("--year", type=int)
+
+args = parser.parse_args()
 
 
 # os.chdir('/Users/erikchavez/Documents/Papers/Economic_Policy/C-T-dynamic-ODEs/')
@@ -432,75 +447,67 @@ def model(pulse, year, cearth=0.3916, baseline="rcp60co2eqv3.csv"):
 # plot from 1800 to 2400
 colors = ['blue', 'green', 'red', 'gold', 'cyan',
           'magenta', 'yellow', 'salmon', 'grey', 'black']
-titles = ['Impulse Response of Temperature Anomaly T',
-          'Impulse Response of Carbon Concentration Dynamics C']
-ylabels = ['Temperature (K)', 'Carbon (ppm)',
-           'Emission (Gtc)', 'Degree (Celsius)']
+# titles = ['Impulse Response of Temperature Anomaly T',
+#           'Impulse Response of Carbon Concentration Dynamics C']
+# ylabels = ['Temperature (K)', 'Carbon (ppm)',
+#            'Emission (Gtc)', 'Degree (Celsius)']
 # fig, axs = plt.subplots(len(selected_index),1, figsize = (3*(len(selected_index)),20), dpi = 200)
 
-ceartharray = np.array((0.3725, 0.3916, 15))
-pulsearray = np.arange(0, 100, 1)
-baselinearray = ["carbonvoid.csv",  "rcp85co2eqv3.csv", "rcp60co2eqv3.csv",
-                 "rcp45co2eqv3.csv", "rcp30co2eqv3.csv", "rcp00co2eqv3.csv"]
-yeararray = np.array((1801, 2010))
+# ceartharray = np.array((0.3725, 0.3916, 15))
+# pulsearray = np.arange(0, 100, 1)
+# baselinearray = ["carbonvoid.csv",  "rcp85co2eqv3.csv", "rcp60co2eqv3.csv",
+#                  "rcp45co2eqv3.csv", "rcp30co2eqv3.csv", "rcp00co2eqv3.csv"]
+# yeararray = np.array((1801, 2010))
 # Figure_Dir = "./nonlinearCarbon/figure/pulse_average/"
 Figure_Dir = "./figure/NC_PulseExp/"
-year = 1801
 
-cearth = 0.3725
-pulse = 10
-baseline = "rcp60co2eqv3.csv"
+pattern = args.pattern
+title = args.title
+ylabel = args.ylabel
+cearth = args.cearth
+impulse = args.impulse
+baseline = args.baseline
+year = args.year
 
-# model(pulse, year, cearth, baseline)
-
-modelsolBase = model(pulse, year=year,
+modelsolBase = model(pulse=0, year=year,
                      cearth=cearth, baseline=baseline)
 
 fig, axs = plt.subplots(2, 1, figsize=(3*4, 20))
 
+modelsol = model(impulse, year, cearth, baseline)
+
+print(baseline, cearth, impulse)
+
 for j in range(2):
-    axs[j].plot(modelsolBase[0], modelsolBase[j+1], color=colors[j %
-                len(colors)], label=f"cearth={cearth},pulse={pulse}")
-    axs[j].set_ylabel(ylabels[j])
-    axs[j].set_title(titles[j])
+    if pattern == 0:
+        axs[j].plot(modelsol[0], modelsol[j+1]-modelsolBase[j+1], color=colors[j %
+                    len(colors)], label=f"cearth={cearth},pulse={impulse}")
+    if pattern == 1:
+        axs[j].plot(modelsol[0], (modelsol[j+1]-modelsolBase[j+1])/impulse, color=colors[j %
+                    len(colors)], label=f"cearth={cearth},pulse={impulse}")
+    if pattern == 2:
+        axs[j].plot(modelsol[0], (modelsol[j+1]-modelsolBase[j+1])*impulse/1000, color=colors[j %
+                    len(colors)], label=f"cearth={cearth},pulse={impulse}")
+    axs[j].set_ylabel(ylabel)
+    axs[j].set_title(title)
     if j == 1:
         axs[j].set_xlabel('Year')
     axs[j].legend(loc='lower right')
 
-plt.show()
-# for year in yeararray:
-
-#     for baseline in baselinearray:
-
-#         for cearth in ceartharray:
-
-#             modelsolBase = model(pulse=0, year=year,
-#                                  cearth=cearth, baseline=baseline)
-
-#             for pulse in pulsearray:
-
-#                 fig, axs = plt.subplots(2, 1, figsize=(3*4, 20))
-
-#                 modelsol = model(pulse, year, cearth, baseline)
-
-#                 print(baseline, cearth, pulse)
-
-#                 for j in range(2):
-
-#                     axs[j].plot(modelsol[0], modelsol[j+1]-modelsolBase[j+1], color=colors[j %
-#                                 len(colors)], label=f"cearth={cearth},pulse={pulse}")
-#                     axs[j].set_ylabel(ylabels[j])
-#                     axs[j].set_title(titles[j])
-#                     axs[j].set_xlabel('Year')
-#                     axs[j].legend(loc='lower right')
-
-#                 plt.tight_layout()
-#                 # plt.savefig(Figure_Dir+"Baseline="+baseline+",cearth" +
-#                 #             str(cearth)+",year"+str(year)+",pulse="+str(pulse)+".pdf")
-#                 plt.savefig(Figure_Dir+"Baseline="+baseline+",cearth=" +
-#                             str(cearth)+",year="+str(year)+",pulse="+str(pulse)+",2IRF.png")
-#                 # plt.show()
-#                 plt.close()
+plt.tight_layout()
+# plt.savefig(Figure_Dir+"Baseline="+baseline+",cearth" +
+#             str(cearth)+",year"+str(year)+",pulse="+str(pulse)+".pdf")
+if pattern == 0:
+    plt.savefig(Figure_Dir+"Baseline="+baseline+",cearth=" +
+                str(cearth)+",year="+str(year)+",pulse="+str(impulse)+",2IRF.png")
+if pattern == 1:
+    plt.savefig(Figure_Dir+"Baseline="+baseline+",cearth=" +
+                str(cearth)+",year="+str(year)+",pulse="+str(impulse)+",2IRF,per.png")
+if pattern == 2:
+    plt.savefig(Figure_Dir+"Baseline="+baseline+",cearth=" +
+                str(cearth)+",year="+str(year)+",pulse="+str(impulse)+",2IRF,Tera.png")
+# plt.show()
+plt.close()
 
 
 # # plot from 1800 to 2400
