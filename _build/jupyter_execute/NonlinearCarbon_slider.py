@@ -20,8 +20,10 @@ warnings.filterwarnings('ignore')
 
 get_ipython().run_line_magic('matplotlib', 'inline')
 
+# def image(pulse=(0, 99), cearth=np.array((0.3725, 0.3916, 15.0)), baseline=["carbonvoid.csv",  "rcp00co2eqv3.csv", "rcp30co2eqv3.csv", "rcp45co2eqv3.csv", "rcp60co2eqv3.csv"], year=np.array((1801, 2010)), option=["Trad", "IRF", "IRFstand", "IRFTera"]):
+
 @interact
-def image(pulse=(0, 99), cearth=np.array((0.3725, 0.3916, 15.0)), baseline=["carbonvoid.csv",  "rcp00co2eqv3.csv", "rcp30co2eqv3.csv", "rcp45co2eqv3.csv", "rcp60co2eqv3.csv"], year=np.array((1801, 2010)), option=["Trad", "IRF", "IRFstand", "IRFTera"]):
+def image(pulse=(0, 49), cearth=np.array((0.3916, 15.0)), baseline=["carbonvoid.csv",  "rcp00co2eqv3.csv", "rcp30co2eqv3.csv", "rcp45co2eqv3.csv", "rcp60co2eqv3.csv"], year=np.array((1801,2010)), option=["Trad", "IRF", "IRFstand", "IRFTera"]):
     Figure_Dir = "./figure/NC_PulseExp/"
     # baseline = "rcp60co2eqv3.csv"
     # cearth=15.0

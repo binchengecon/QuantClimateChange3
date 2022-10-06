@@ -7,6 +7,6 @@ sections:
 # - file: markdown
 # - file: notebooks
 # - file: markdown-notebooks
-- file: NonlinearCarbon
+# - file: NonlinearCarbon
 # - file: markdown-notebooks
 - file: NonlinearCarbon_slider
