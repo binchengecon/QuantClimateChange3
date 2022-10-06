@@ -1,6 +1,6 @@
 #! /bin/bash
 
-git add .
+git add -- . ":!job-outs" ":!bash"
 git commit -m initial
 git push
 

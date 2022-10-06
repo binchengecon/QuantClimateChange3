@@ -16,7 +16,7 @@ declare -a baselinearray=("carbonvoid.csv" "rcp60co2eqv3.csv" "rcp45co2eqv3.csv"
 # declare -a baselinearray=("rcp60co2eqv3.csv" "rcp45co2eqv3.csv")
 # declare -a baselinearray=("rcp30co2eqv3.csv" "rcp00co2eqv3.csv")
 # yeararray=(1801 1900 2000 2010 2020 2030)
-yeararray=(1801)
+yeararray=(2010)
 pattern=2
 count=0
 
