@@ -4,9 +4,12 @@
 format: jb-article
 root: intro
 sections:
+- file: NonlinearCarbon_slider
+
+
 # - file: markdown
 # - file: notebooks
 # - file: markdown-notebooks
 # - file: NonlinearCarbon
 # - file: markdown-notebooks
-- file: NonlinearCarbon_slider
+# - file: NonlinearCarbon_slider
