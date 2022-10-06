@@ -6,7 +6,6 @@ python_name="Model_Erik_PureIRF_graphsize.py"
 
 
 declare -a titles=('Impulse Response of Temperature Anomaly' 'Impulse Response of Carbon Concentration Dynamics')
-declare -a ylabels=('Temperature (K)' 'Carbon (ppm)' 'Emission (Gtc)' 'Degree (Celsius)')
 ceartharray=(0.3725 0.3916 15)
 impulsearray=($(seq 0 100 ))
 declare -a baselinearray = ("carbonvoid.csv" "rcp85co2eqv3.csv" "rcp60co2eqv3.csv" "rcp45co2eqv3.csv" "rcp30co2eqv3.csv" "rcp00co2eqv3.csv")
@@ -82,7 +81,6 @@ python_name="Model_Erik_PureIRF_graphsize.py"
 
 
 declare -a titles=('Impulse Response of Temperature Anomaly per Gtc' 'Impulse Response of Carbon Concentration Dynamics per Gtc')
-declare -a ylabels=('Temperature (K)' 'Carbon (ppm)' 'Emission (Gtc)' 'Degree (Celsius)')
 ceartharray=(0.3725 0.3916 15)
 impulsearray=($(seq 0 100 ))
 declare -a baselinearray = ("carbonvoid.csv" "rcp85co2eqv3.csv" "rcp60co2eqv3.csv" "rcp45co2eqv3.csv" "rcp30co2eqv3.csv" "rcp00co2eqv3.csv")
