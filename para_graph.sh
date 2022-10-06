@@ -49,8 +49,8 @@ do
 
 #SBATCH --account=pi-lhansen
 #SBATCH --partition=standard
-#SBATCH --cpus-per-task=3
-#SBATCH --mem=16G
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=1G
 #SBATCH --time=7-00:00:00
 
 ####### load modules
@@ -126,8 +126,8 @@ do
 
 #SBATCH --account=pi-lhansen
 #SBATCH --partition=standard
-#SBATCH --cpus-per-task=3
-#SBATCH --mem=16G
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=1G
 #SBATCH --time=7-00:00:00
 
 ####### load modules
@@ -202,8 +202,8 @@ do
 
 #SBATCH --account=pi-lhansen
 #SBATCH --partition=standard
-#SBATCH --cpus-per-task=3
-#SBATCH --mem=16G
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=1G
 #SBATCH --time=7-00:00:00
 
 ####### load modules
