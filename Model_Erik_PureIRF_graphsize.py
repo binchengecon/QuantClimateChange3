@@ -492,7 +492,7 @@ for j in range(2):
         axs[j].plot(modelsol[0], (modelsol[j+1]-modelsolBase[j+1])/impulse, color=colors[j %
                     len(colors)], label=f"cearth={cearth},pulse={impulse}")
     if pattern == 2:
-        axs[j].plot(modelsol[0], (modelsol[j+1]-modelsolBase[j+1])*impulse/1000, color=colors[j %
+        axs[j].plot(modelsol[0], (modelsol[j+1]-modelsolBase[j+1])/1000, color=colors[j %
                     len(colors)], label=f"cearth={cearth},pulse={impulse}")
     axs[j].set_ylabel(ylabels[j])
     axs[j].set_title(titles[j])
