@@ -22,13 +22,14 @@ import argparse
 
 mpl.rcParams["lines.linewidth"] = 2.5
 mpl.rcParams["savefig.bbox"] = "tight"
-mpl.rcParams["figure.figsize"] = (16, 5)
+mpl.rcParams["figure.figsize"] = (8, 5)
 mpl.rcParams["font.size"] = 18
 mpl.rcParams["legend.frameon"] = False
 
 
 parser = argparse.ArgumentParser(description="graphparameters")
 parser.add_argument("--pattern", type=int)
+parser.add_argument("--title", type=str)
 parser.add_argument("--cearth", type=float)
 parser.add_argument("--impulse", type=int)
 parser.add_argument("--baseline", type=str)
@@ -445,8 +446,8 @@ def model(pulse, year, cearth=0.3916, baseline="rcp60co2eqv3.csv"):
 # plot from 1800 to 2400
 colors = ['blue', 'green', 'red', 'gold', 'cyan',
           'magenta', 'yellow', 'salmon', 'grey', 'black']
-# titles = ['Impulse Response of Temperature Anomaly T',
-#           'Impulse Response of Carbon Concentration Dynamics C']
+titles = ['Impulse Response of Temperature Anomaly T',
+          'Impulse Response of Carbon Concentration Dynamics C']
 ylabels = ['Temperature (K)', 'Carbon (ppm)',
            'Emission (Gtc)', 'Degree (Celsius)']
 # fig, axs = plt.subplots(len(selected_index),1, figsize = (3*(len(selected_index)),20), dpi = 200)
@@ -459,11 +460,11 @@ ylabels = ['Temperature (K)', 'Carbon (ppm)',
 # Figure_Dir = "./nonlinearCarbon/figure/pulse_average/"
 Figure_Dir = "./figure/NC_PulseExp/"
 
-pattern = args.pattern
-cearth = args.cearth
-impulse = args.impulse
-baseline = args.baseline
-year = args.year
+pattern = 0
+cearth = 15.0
+impulse = 1
+baseline = "carbonvoid.csv"
+year = 1801
 
 modelsolBase = model(pulse=0, year=year,
                      cearth=cearth, baseline=baseline)
@@ -473,16 +474,6 @@ fig, axs = plt.subplots(2, 1, figsize=(16, 10))
 modelsol = model(impulse, year, cearth, baseline)
 
 print(baseline, cearth, impulse)
-
-if pattern == 0:
-    titles = ["Impulse Response of Temperature Anomaly",
-              "Impulse Response of Carbon Concentration Dynamics"]
-if pattern == 1:
-    titles = ["Impulse Response of Temperature Anomaly per Gtc",
-              "Impulse Response of Carbon Concentration Dynamics per Gtc"]
-if pattern == 2:
-    titles = ["Impulse Response of Temperature Anomaly per Ttc",
-              "Impulse Response of Carbon Concentration Dynamics per Ttc"]
 
 for j in range(2):
     if pattern == 0:
