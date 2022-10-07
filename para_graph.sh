@@ -17,9 +17,9 @@ declare -a baselinearray=("carbonvoid.csv" "rcp00co2eqv3.csv" "rcp30co2eqv3.csv"
 # declare -a baselinearray=("rcp60co2eqv3.csv" "rcp45co2eqv3.csv")
 # declare -a baselinearray=("rcp30co2eqv3.csv" "rcp00co2eqv3.csv")
 # yeararray=(1801 1900 2000 2010 2020 2030)
-tem_ylim_lower_array=(-11 -8 -5 -2.5 -1.5 -0.0025 -0.0025 0.00 0.00 0.00) 
-tem_ylim_upper_array=(3 1.5 1.5 0.8 0.3 0.0125 0.0125 0.015 0.015 0.015)
-#cearth part       #0.3916 0.3916 0.3916 0.3916 15 15 15 15 
+tem_ylim_lower_array=(-11 -8 -5 -2.5 -1.5 -0.0025 -0.0025 -0.0025 -0.0025 -0.0025) 
+tem_ylim_upper_array=(3 2 1.5 0.8 0.3 0.0125 0.0125 0.015 0.015 0.015)
+#cearth part       #0.3916 0.3916 0.3916 0.3916 0.3916 15 15 15 15 15 
 #baseline part     # "carbonvoid.csv" "rcp00co2eqv3.csv" "rcp30co2eqv3.csv" "rcp45co2eqv3.csv" "rcp60co2eqv3.csv" #"carbonvoid.csv" "rcp00co2eqv3.csv" "rcp30co2eqv3.csv" "rcp45co2eqv3.csv" "rcp60co2eqv3.csv"
 yeararray=(2010)
 pattern=1
