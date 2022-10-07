@@ -5,5 +5,5 @@ format: jb-article
 root: intro
 sections:
 - file: markdown_beginning
-- file: NonlinearCarbon
+# - file: NonlinearCarbon
 - file: markdown
