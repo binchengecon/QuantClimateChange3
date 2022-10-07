@@ -22,18 +22,19 @@ import argparse
 
 mpl.rcParams["lines.linewidth"] = 2.5
 mpl.rcParams["savefig.bbox"] = "tight"
-# mpl.rcParams["figure.figsize"] = (8, 5)
+# mpl.rcParams["figure.figsize"] = (16, 5)
 mpl.rcParams["font.size"] = 18
 mpl.rcParams["legend.frameon"] = False
 
 
 parser = argparse.ArgumentParser(description="graphparameters")
 parser.add_argument("--pattern", type=int)
-parser.add_argument("--title", type=str)
 parser.add_argument("--cearth", type=float)
 parser.add_argument("--impulse", type=int)
 parser.add_argument("--baseline", type=str)
 parser.add_argument("--year", type=int)
+parser.add_argument("--tem_ylim_lower", type=float)
+parser.add_argument("--tem_ylim_upper", type=float)
 
 args = parser.parse_args()
 
@@ -446,25 +447,27 @@ def model(pulse, year, cearth=0.3916, baseline="rcp60co2eqv3.csv"):
 # plot from 1800 to 2400
 colors = ['blue', 'green', 'red', 'gold', 'cyan',
           'magenta', 'yellow', 'salmon', 'grey', 'black']
-titles = ['Impulse Response of Temperature Anomaly T',
-          'Impulse Response of Carbon Concentration Dynamics C']
+# titles = ['Impulse Response of Temperature Anomaly T',
+#           'Impulse Response of Carbon Concentration Dynamics C']
 ylabels = ['Temperature (K)', 'Carbon (ppm)',
            'Emission (Gtc)', 'Degree (Celsius)']
 # fig, axs = plt.subplots(len(selected_index),1, figsize = (3*(len(selected_index)),20), dpi = 200)
 
 # ceartharray = np.array((0.3725, 0.3916, 15))
 # pulsearray = np.arange(0, 100, 1)
-# baselinearray = ["carbonvoid.csv",  "rcp85co2eqv3.csv", "rcp60co2eqv3.csv",
-#                  "rcp45co2eqv3.csv", "rcp30co2eqv3.csv", "rcp00co2eqv3.csv"]
+baselinearray = ["carbonvoid.csv",  "rcp85co2eqv3.csv", "rcp60co2eqv3.csv",
+                 "rcp45co2eqv3.csv", "rcp30co2eqv3.csv", "rcp00co2eqv3.csv"]
 # yeararray = np.array((1801, 2010))
 # Figure_Dir = "./nonlinearCarbon/figure/pulse_average/"
 Figure_Dir = "./figure/NC_PulseExp/"
 
-pattern = 0
-cearth = 15.0
-impulse = 1
-baseline = "carbonvoid.csv"
-year = 1801
+pattern = args.pattern
+cearth = args.cearth
+impulse = args.impulse
+baseline = args.baseline
+year = args.year
+tem_ylim_lower = args.tem_ylim_lower
+tem_ylim_upper = args.tem_ylim_upper
 
 modelsolBase = model(pulse=0, year=year,
                      cearth=cearth, baseline=baseline)
@@ -475,6 +478,16 @@ modelsol = model(impulse, year, cearth, baseline)
 
 print(baseline, cearth, impulse)
 
+if pattern == 0:
+    titles = ["Impulse Response of Temperature Anomaly",
+              "Impulse Response of Carbon Concentration Dynamics"]
+if pattern == 1:
+    titles = ["Impulse Response of Temperature Anomaly per Gtc",
+              "Impulse Response of Carbon Concentration Dynamics per Gtc"]
+if pattern == 2:
+    titles = ["Impulse Response of Temperature Anomaly per Ttc",
+              "Impulse Response of Carbon Concentration Dynamics per Ttc"]
+
 for j in range(2):
     if pattern == 0:
         axs[j].plot(modelsol[0], modelsol[j+1]-modelsolBase[j+1], color=colors[j %
@@ -483,10 +496,12 @@ for j in range(2):
         axs[j].plot(modelsol[0], (modelsol[j+1]-modelsolBase[j+1])/impulse, color=colors[j %
                     len(colors)], label=f"cearth={cearth},pulse={impulse}")
     if pattern == 2:
-        axs[j].plot(modelsol[0], (modelsol[j+1]-modelsolBase[j+1])*impulse/1000, color=colors[j %
+        axs[j].plot(modelsol[0], (modelsol[j+1]-modelsolBase[j+1])/1000, color=colors[j %
                     len(colors)], label=f"cearth={cearth},pulse={impulse}")
     axs[j].set_ylabel(ylabels[j])
     axs[j].set_title(titles[j])
+    if j==0 and pattern==1:
+        axs[j].set_ylim(tem_ylim_lower,tem_ylim_upper)
     if j == 1:
         axs[j].set_xlabel('Year')
     axs[j].legend(loc='lower right')
@@ -496,7 +511,7 @@ plt.tight_layout()
 #             str(cearth)+",year"+str(year)+",pulse="+str(pulse)+".pdf")
 if pattern == 0:
     plt.savefig(Figure_Dir+"Baseline="+baseline+",cearth=" +
-                str(cearth)+",year="+str(year)+",pulse="+str(impulse)+",2IRF2.png")
+                str(cearth)+",year="+str(year)+",pulse="+str(impulse)+",2IRF.png")
 if pattern == 1:
     plt.savefig(Figure_Dir+"Baseline="+baseline+",cearth=" +
                 str(cearth)+",year="+str(year)+",pulse="+str(impulse)+",2IRF,per.png")
