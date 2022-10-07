@@ -1,9 +1,11 @@
 # Table of contents
 # Learn more at https://jupyterbook.org/customize/toc.html
 
-format: jb-article
+format: jb-book
 root: intro
-sections:
+options:
+  numbered: true
+chapters:
 - file: markdown_beginning
 - file: NonlinearCarbon
 - file: markdown
