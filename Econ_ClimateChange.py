@@ -26,6 +26,9 @@ parser.add_argument("--fraction",type=float,default=0.1)
 parser.add_argument("--cearth",type=float,default=0.3916)
 parser.add_argument("--tauc",type=float,default=30)
 
+parser.add_argument("--hXarr",nargs='+',type=float, default=(0.4, 4.0, 40.0))
+parser.add_argument("--Xminarr",nargs='+',type=float, default=(1e-8, 0.0, -5.5))
+parser.add_argument("--Xmaxarr",nargs='+',type=float, default=(9.0, 4.0, 0.0))
 
 args = parser.parse_args()
 
@@ -274,14 +277,6 @@ def model(cearth=0.3916,tauc = 30):
     Vecar_min = 0
     Vecar_max = 5/12
 
-    def Bioloss(Cc):
-        if Cc < Cbio_low:
-            return Vecar_min
-        elif Cc < Cbio_high:
-            return Vecar_min + (Vecar_max - Vecar_min) / (Cbio_high - Cbio_low) * (Cc - Cbio_low)
-        else:  # so Cc is higher
-            return Vecar_max
-            # return -1
 
 
 

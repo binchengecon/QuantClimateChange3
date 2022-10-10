@@ -4,10 +4,14 @@ action_name="EconClimate"
 # python_name="Model_Erik_PureIRF_graphsize.py"
 python_name="Econ_ClimateChange.py"
 
-ceartharray=(0.3916)
-taucarray=(30)
-maxiter=5000
+ceartharray=(0.3916 15 63)
+taucarray=(30 6603)
+maxiter=50000
 fraction=0.05
+
+hXarr=(0.2 4.0 40.0)
+Xminarr=(0.00000001 0.0 0.00000001)
+Xmaxarr=(9.00 4.0 0.0 3.0)
 
 count=0
 for cearth in ${ceartharray[@]}; do
@@ -28,8 +32,8 @@ for cearth in ${ceartharray[@]}; do
 
 ######## login
 #SBATCH --job-name=im_$count
-#SBATCH --output=./job-outs/${action_name}/cearth_${cearth}_tauc_${tauc}/mercury2.out
-#SBATCH --error=./job-outs/${action_name}/cearth_${cearth}_tauc_${tauc}/mercury2.err
+#SBATCH --output=./job-outs/${action_name}/cearth_${cearth}_tauc_${tauc}/mercury_${maxiter}.out
+#SBATCH --error=./job-outs/${action_name}/cearth_${cearth}_tauc_${tauc}/mercury_${maxiter}.err
 
 
 #SBATCH --account=pi-lhansen
