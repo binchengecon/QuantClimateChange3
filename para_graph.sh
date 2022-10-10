@@ -5,7 +5,6 @@ server_name="graph"
 # python_name="Model_Erik_PureIRF_graphsize.py"
 python_name="Model_Erik_PureIRF_graphsize2.py"
 
-
 # ceartharray=(0.3725 0.3916 15)
 ceartharray=(0.3916 15)
 impulsearray=($(seq 0 50))
@@ -17,37 +16,31 @@ declare -a baselinearray=("carbonvoid.csv" "rcp00co2eqv3.csv" "rcp30co2eqv3.csv"
 # declare -a baselinearray=("rcp60co2eqv3.csv" "rcp45co2eqv3.csv")
 # declare -a baselinearray=("rcp30co2eqv3.csv" "rcp00co2eqv3.csv")
 # yeararray=(1801 1900 2000 2010 2020 2030)
-tem_ylim_lower_array=(-11 -8 -5 -2.5 -1.5 -0.0025 -0.0025 -0.0025 -0.0025 -0.0025) 
+tem_ylim_lower_array=(-11 -8 -5 -2.5 -1.5 -0.0025 -0.0025 -0.0025 -0.0025 -0.0025)
 tem_ylim_upper_array=(3 2 1.5 0.8 0.3 0.0125 0.0125 0.015 0.015 0.015)
-#cearth part       #0.3916 0.3916 0.3916 0.3916 0.3916 15 15 15 15 15 
+#cearth part       #0.3916 0.3916 0.3916 0.3916 0.3916 15 15 15 15 15
 #baseline part     # "carbonvoid.csv" "rcp00co2eqv3.csv" "rcp30co2eqv3.csv" "rcp45co2eqv3.csv" "rcp60co2eqv3.csv" #"carbonvoid.csv" "rcp00co2eqv3.csv" "rcp30co2eqv3.csv" "rcp45co2eqv3.csv" "rcp60co2eqv3.csv"
 yeararray=(2010)
 pattern=1
 count=0
 
-
-for impulse in ${impulsearray[@]}
-do
+for impulse in ${impulsearray[@]}; do
     ylimcount=0
-    for cearth in ${ceartharray[@]}
-    do
-        for baseline in ${baselinearray[@]}
-        do
-            for year in ${yeararray[@]}
-            do
-                
+    for cearth in ${ceartharray[@]}; do
+        for baseline in ${baselinearray[@]}; do
+            for year in ${yeararray[@]}; do
+
                 mkdir -p ./job-outs/${action_name}/pattern_${pattern}_cearth_${cearth}_baseline_${baseline}_year_${year}/
-                
-                if [ -f ./bash/${action_name}/pattern_${pattern}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh ]
-                then
+
+                if [ -f ./bash/${action_name}/pattern_${pattern}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh ]; then
                     rm ./bash/${action_name}/pattern_${pattern}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
                 fi
-                
+
                 mkdir -p ./bash/${action_name}/
-                
+
                 touch ./bash/${action_name}/pattern_${pattern}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
-                
-                        tee -a ./bash/${action_name}/pattern_${pattern}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh << EOF
+
+                tee -a ./bash/${action_name}/pattern_${pattern}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh <<EOF
 #! /bin/bash
 
 
@@ -75,12 +68,11 @@ python3 /home/bcheng4/QuantClimateChange/$python_name --pattern ${pattern} --cea
 echo "Program ends \$(date)"
 
 EOF
-                
+
                 sbatch ./bash/${action_name}/pattern_${pattern}_cearth_${cearth}_baseline_${baseline}_year_${year}_impulse_${impulse}.sh
-                count=$(($count+1))
+                count=$(($count + 1))
             done
-            ylimcount=$(($ylimcount+1))
+            ylimcount=$(($ylimcount + 1))
         done
     done
 done
-

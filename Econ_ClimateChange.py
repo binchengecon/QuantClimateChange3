@@ -16,6 +16,20 @@ import pickle
 import pandas as pd
 import numpy as np
 import sys
+import argparse
+
+
+parser = argparse.ArgumentParser(description="values")
+
+parser.add_argument("--maxiter",type=int,default=5000)
+parser.add_argument("--fraction",type=float,default=0.1)
+parser.add_argument("--cearth",type=float,default=0.3916)
+parser.add_argument("--tauc",type=float,default=30)
+
+
+args = parser.parse_args()
+
+
 sys.path.append("../src/")
 rcParams["figure.figsize"] = (8, 5)
 rcParams["savefig.bbox"] = 'tight'
@@ -441,12 +455,12 @@ def model(cearth=0.3916,tauc = 30):
     # v0 =  delta * eta * np.log(delta /4 * (9000/2.13 - F_mat)) + (eta - 1) * gamma_2 * T_mat / cearth * (B * np.log(C_mat/ C0) + kappa * (T_mat + To - Tkappa))
 
     dG = gamma_1 + gamma_2 * T_mat
-    epsilon = 0.1
+    epsilon = args.fraction
     count = 0
     error = 1.
     tol = 1e-8
-    max_iter = 10
-    fraction = 0.1
+    max_iter = args.maxiter
+    fraction = args.fraction
 
     while error > tol and count < max_iter:
 
@@ -497,10 +511,10 @@ def model(cearth=0.3916,tauc = 30):
         count += 1
 
         print("Iteration: %s;\t False Transient Error: %s;\t PDE Error: %s\t" %
-              (count, lhs_error, rhs_error))
+              (count, lhs_error, rhs_error),flush=True)
 
     print("Total iteration: %s;\t LHS Error: %s;\t RHS Error %s\t" %
-          (count, lhs_error, rhs_error))
+          (count, lhs_error, rhs_error),flush=True)
 
     return T_grid,C_grid,F_grid,Ca,cearth,tauc
 
@@ -723,7 +737,9 @@ def simulation(T_grid,C_grid,F_grid,Ca,cearth=0.3916,tauc = 30):
 
     
 
+cearth = args.cearth
+tauc=args.tauc
 
-
-T_grid,C_grid,F_grid,Ca,cearth,tauc = model(0.3916,30)
+T_grid,C_grid,F_grid,Ca,cearth,tauc = model(cearth,tauc)
+print("Solving Model Done, cearth={:.4f}, tauc={:.5f}".format(cearth,tauc))
 simulation(T_grid,C_grid,F_grid,Ca,cearth,tauc)
