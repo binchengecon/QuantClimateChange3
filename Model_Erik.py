@@ -204,13 +204,7 @@ def model(pulse, year, cearth=0.3916, baseline="rcp60co2eqv3.csv"):
             # return acc
             return 0
 
-    # T_values = np.linspace(280, 315, 201)
-    # plt.plot(T_values, [veggrowth(val) for val in T_values])
-    # plt.tick_params(axis='both', which='major', labelsize=13)
-    # plt.xlabel('Temperature (K)',fontsize = 14);
-    # plt.ylabel('Vegetation growth',fontsize = 14);
-    # plt.grid(linestyle=':')
-    # veggrowth(286.6181299517094)
+
 
     # ramp function of lower optimum temperature
     def Tbioptlow(Cc):

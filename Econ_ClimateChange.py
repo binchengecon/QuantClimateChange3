@@ -391,8 +391,6 @@ def model(cearth=0.3916,tauc = 30):
     # Integrate the ODE
 
     sa = 1
-    Ts = 286.45
-    Cs = 269
 
     #############################################
     ########Economic Model Part###################
@@ -436,9 +434,7 @@ def model(cearth=0.3916,tauc = 30):
 
     To = 282.87  # Mean with no anthropogenic carbon emissions, in Fᵒ
 
-    # cearth = 35.
 
-    # tauc = 6603.
 
     # v0 = pickle.load(open("data_35.0_6603", "rb"))["v0"]
     v0 = - eta * T_mat - eta * F_mat
@@ -449,7 +445,7 @@ def model(cearth=0.3916,tauc = 30):
     count = 0
     error = 1.
     tol = 1e-8
-    max_iter = 5000
+    max_iter = 10
     fraction = 0.1
 
     while error > tol and count < max_iter:
@@ -583,12 +579,12 @@ def simulation(T_grid,C_grid,F_grid,Ca,cearth=0.3916,tauc = 30):
     gridpoints = (T_grid, C_grid, F_grid)   
     Ca_func = RegularGridInterpolator(gridpoints, Ca)
 
-    T_0 = To + min(T_grid)
-    C_0 = 275.5
-    F_0 = min(F_grid) #(870 - 580) / 2.13 # total cumulated, as of now, preindustrial with Fo
+    # T_0 = To + min(T_grid)
+    # C_0 = 275.5
+    # F_0 = min(F_grid) #(870 - 580) / 2.13 # total cumulated, as of now, preindustrial with Fo
 
     T_0 = To + 1.1
-    C_0 = 417
+    C_0 = 275.5
     F_0 = (870 - 580) / 2.13
 
     def get_e(x):
@@ -708,6 +704,24 @@ def simulation(T_grid,C_grid,F_grid,Ca,cearth=0.3916,tauc = 30):
             hist[tm,0] = max(hist[tm-1,0] + mu_T(hist[tm-1,:]) * dt, To + min(T_grid))
             hist[tm,1] = hist[tm-1,1] + mu_C(hist[tm-1,:]) * dt
             hist[tm,2] = hist[tm-1,2] + mu_Sa(hist[tm-1,:]) * dt
+
+    plt.subplots(1,3, figsize=(24,5))
+    plt.subplot(131)
+    plt.plot(years, hist[:, 0] - To)
+    plt.xlabel("Years")
+    plt.title("Temperature anomaly")
+    plt.subplot(132)
+    plt.plot(years, hist[:, 1])
+    plt.xlabel("Years")
+    plt.title("Atmospheric carbon concentration")
+    plt.subplot(133)
+    plt.plot(years, e_hist * 2.13)
+    plt.xlabel("Years")
+    plt.title("Emission in Gigaton")
+    plt.ylim(-0.1)
+    plt.savefig(f"./figure/Econ_Climate/T_C_E_{cearth}_{tauc}.pdf")
+
+    
 
 
 
