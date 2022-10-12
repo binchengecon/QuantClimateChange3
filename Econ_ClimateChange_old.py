@@ -49,7 +49,7 @@ def PDESolver(stateSpace, A, B1, B2, B3, C1, C2, C3, D, v0,
     return out  
 
 
-def model(cearth=0.3916,tauc = 30):
+def model(cearth,tauc):
 
     #############################################
     ##########Climate Change Part################
@@ -103,29 +103,29 @@ def model(cearth=0.3916,tauc = 30):
     Volcan = 0.028
 
 
-    # def alphaocean(T):
-    #     """T, matrix, (nT, nC, nF)"""
-    #     temp = np.zeros(T.shape)
-    #     temp[ T< Talphaocean_low ] = alphaocean_max
-    #     temp[ (T>= Talphaocean_low)&(T< Talphaocean_high)] = alphaocean_max + (alphaocean_min - alphaocean_max) / (Talphaocean_high - Talphaocean_low) * (T[(T>= Talphaocean_low)&(T< Talphaocean_high)] - Talphaocean_low)
-    #     temp[T>= Talphaocean_high] = alphaocean_min
+    def alphaocean(T):
+        """T, matrix, (nT, nC, nF)"""
+        temp = np.zeros(T.shape)
+        temp[ T< Talphaocean_low ] = alphaocean_max
+        temp[ (T>= Talphaocean_low)&(T< Talphaocean_high)] = alphaocean_max + (alphaocean_min - alphaocean_max) / (Talphaocean_high - Talphaocean_low) * (T[(T>= Talphaocean_low)&(T< Talphaocean_high)] - Talphaocean_low)
+        temp[T>= Talphaocean_high] = alphaocean_min
 
-    #     return temp
+        return temp
 
     # alphaocean = (0.255 + 0.37 ) /2.
-    alphaocean = 0.3444045881126172
+    # alphaocean = 0.3444045881126172
 
     #Fraction of ocean covered by ice
-    # def fracseaice(T):
+    def fracseaice(T):
         
-    #     temp = np.zeros(T.shape)
-    #     temp[ T< Talphaocean_low ] = 1
-    #     temp[ (T>= Talphaocean_low)&(T< Talphaocean_high)] = 1 - 1 / (Talphaocean_high - Talphaocean_low) * (T[(T>= Talphaocean_low)&(T< Talphaocean_high)] - Talphaocean_low)
-    #     temp[T>= Talphaocean_high] = 0
+        temp = np.zeros(T.shape)
+        temp[ T< Talphaocean_low ] = 1
+        temp[ (T>= Talphaocean_low)&(T< Talphaocean_high)] = 1 - 1 / (Talphaocean_high - Talphaocean_low) * (T[(T>= Talphaocean_low)&(T< Talphaocean_high)] - Talphaocean_low)
+        temp[T>= Talphaocean_high] = 0
 
-    #     return temp
+        return temp
         
-    fracseaice = 0.15
+    # fracseaice = 0.15
     # fracseaice = 0.1
 
 
@@ -156,7 +156,8 @@ def model(cearth=0.3916,tauc = 30):
     # def Ri(T):
     #     return 1/cearth * (Q0 * (1 - p * alphaland - (1 - p) * alphaocean) )
 
-    Ri = 1 / cearth * Q0 * (1 - p * alphaland - (1 - p) * alphaocean)
+    def Ri(T):
+        return 1/cearth * (Q0 * (1 - p * alphaland - (1 - p) * alphaocean(T)))
 
     # Outgoing radiation modified by greenhouse effect
     def Ro(T, C):
@@ -164,17 +165,18 @@ def model(cearth=0.3916,tauc = 30):
 
     #Solubility of atmospheric carbon into the oceans
     # carbon pumps
-    def kappaP(T, W):
-        return np.exp(-(bP + sigma_P * W) * (T - T0))
+    def kappaP(T):
+        return np.exp(-bP * (T - T0))
 
-    def oceanatmphysflux(T, W):
-        return 1 / tauc * (coc0 * (np.exp(-(bP + sigma_P * W) * (T - T0))))
 
-    def oceanbioflux(T, W, sa):
+    def oceanatmphysflux(T):
+        return 1 / tauc * (coc0 * (np.exp(-bP * (T - T0))))
+
+    def oceanbioflux(T, F, sa):
         
         if sa == 1:
             
-            return 1/tauc * (coc0 * (np.exp( (bB + sigma_B * W) * (T - T0))))
+            return 1/tauc * (coc0 * (np.exp(bB * biopump(F) * (T - T0))))
         
         elif sa == 0:
             
@@ -187,28 +189,7 @@ def model(cearth=0.3916,tauc = 30):
         return 1 / tauc * (- cod * C)
 
         
-    # Incoming radiation modified by albedo
 
-    def Ri(T):
-        return 1/cearth * (Q0 * (1 - p * alphaland - (1 - p) * alphaocean(T)))
-
-    # Outgoing radiation modified by greenhouse effect
-
-    def Ro(T, C):
-        return 1/cearth * (kappa * (T - Tkappa) - B * np.log(C / C0))
-
-    # vegetation carbon flux
-
-    # ocean carbon fluxes
-
-    def oceanatmphysflux(T):
-        return 1 / tauc * (coc0 * (np.exp(-bP * (T - T0))))
-
-    def oceanbioflux(T):
-        return 1/tauc * (coc0 * (np.exp(bB * (T - T0))))
-
-    def oceanatmcorrflux(C):
-        return 1 / tauc * (- cod * C)
 
     # MODEL EQUATIONS
 
@@ -256,14 +237,14 @@ def model(cearth=0.3916,tauc = 30):
         F_mat.reshape(-1, 1, order="F")
     ])
 
-    T_mat.shape
+    print(T_mat.shape)
 
     To = 282.87  # Mean with no anthropogenic carbon emissions, in Fᵒ
 
 
 
     # v0 = pickle.load(open("data_35.0_6603", "rb"))["v0"]
-    v0 = - eta * T_mat - eta * F_mat - eta*C_mat
+    v0 = - eta * T_mat - eta * F_mat 
     # v0 =  delta * eta * np.log(delta /4 * (9000/2.13 - F_mat)) + (eta - 1) * gamma_2 * T_mat / cearth * (B * np.log(C_mat/ C0) + kappa * (T_mat + To - Tkappa))
 
     dG = gamma_1 + gamma_2 * T_mat
@@ -294,12 +275,12 @@ def model(cearth=0.3916,tauc = 30):
     #     Ca = np.ones(T_mat.shape)
         A = - delta * np.ones(T_mat.shape)
         B1 = Ri(T_mat + To) - Ro(T_mat + To, C_mat)
-        B2 = V
+        B2 = Volcan
         B2 += Ca * sa
         # B2 -= wa * C_mat * veggrowth(T_mat + To)
-        B2 -= wa * C_mat * veggrowthdyn(T_mat + To, F_mat)
+        B2 -= wa * C_mat *vegcover*veggrowth(T_mat +To)
         B2 += oceanatmphysflux(T_mat + To) * (1 - fracseaice(T_mat + To))
-        B2 += oceanbioflux(T_mat + To) * \
+        B2 += oceanbioflux(T_mat + To,F_mat,sa) * \
             (1 - fracseaice(T_mat + To))
         B2 += oceanatmcorrflux(C_mat) * (1 - fracseaice(T_mat + To))
         B3 = Ca
@@ -332,179 +313,132 @@ def model(cearth=0.3916,tauc = 30):
 
 def simulation(T_grid,C_grid,F_grid,Ca,cearth=0.3916,tauc = 30):
     To = 282.87  # Mean with no anthropogenic carbon emissions, in Fᵒ
+
+
     Q0 = 342.5
-
-    # land fraction and albedo
-    # Fraction of land on the planet
     p = 0.3
-    # land albedo
-    alphaland = 0.28
-
     # outgoing radiation linearized
     kappa = 1.74
     Tkappa = 154
-
-    # Ocean albedo parameters
-    Talphaocean_low = 219
-    Talphaocean_high = 299
-    alphaocean_max = 0.843
-    alphaocean_min = 0.254
-
-    # CO2 radiative forcing
+    ## CO2 radiative forcing
     # Greenhouse effect parameter
     B = 5.35
-    # CO2 params. C0 is the reference C02 level
+
+    alphaland = 0.28
+    bP = 0.05
+    sigma_P = 0.000
+    bB = 0.08
+    sigma_B = 0.0
+    cod = 0. # 2.5563471547779937 #3.035
+    cearth = 0.107
+    # cearth = 10.
+    tauc = 20
+    coc0 = 0. #350
+    ## Ocean albedo parameters
+    Talphaocean_low = 219
+    Talphaocean_high = 299
+    alphaocean_max = 0.84
+    alphaocean_min = 0.255
+
+    Cbio_low = 50
+    Cbio_high = 700
+    sa=1
+    T0 = 298
     C0 = 280
 
-    # ocean carbon pumps
-    # Solubility dependence on temperature (value from Fowler et al)
-    bP = 0.029
-    # Biopump dependence on temperature (Value from Fowler)
-    bB = 0.069
-    # Ocean carbon pump modulation parameter
-    cod = 2.2
-
-    # timescale and reference temperature (from Fowler)
-    # timescale
-    # Temperature reference
-    T0 = 288
-
-    # Coc0 ocean carbon depending on depth
-    coc0 = 280
-
-    # CO2 uptake by vegetation
-
-    # lower and upper G thresholds
-    Cbio_low = 150
-    Cbio_high = 750
-
-    # vegetation carbon uptake temperatures
-    Thigh = 307.15
-    Tlow = 286.15
-    Topt1 = 290.15
-    Topt2 = 302.15
-    acc = 8
-
-    # lower and upper bounds of opt and viable temp
-    Tbiopt1_low = Topt1
-    Tbiopt1_high = Topt1 + 5
-    Tbiolow_low = Tlow
-    Tbiolow_high = Tlow + 5
-
-    # vegetation growth parameters
+    ## CO2 uptake by vegetation
     wa = 0.015
     vegcover = 0.4
 
-    # Volcanism and atmospheric expansion (Hogg 2008 and LeQuere 2015)
-    V = 2.028
+    Thigh = 315
+    Tlow = 282
+    Topt1 = 295
+    Topt2 = 310
+    acc = 5
 
-
+    ## Volcanism
+    Volcan = 0.028
     t_max = 600.
-    dt = 1/12
-    sa = 1  # , Gigaton per year
+    # dt = 1/12
+    dt = 1  # , Gigaton per year
     gridpoints = (T_grid, C_grid, F_grid)   
     Ca_func = RegularGridInterpolator(gridpoints, Ca)
 
-    # T_0 = To + min(T_grid)
-    # C_0 = 275.5
-    # F_0 = min(F_grid) #(870 - 580) / 2.13 # total cumulated, as of now, preindustrial with Fo
-
-    T_0 = To + 1.1
+    T_0 = To + min(T_grid)
     C_0 = 275.5
-    F_0 = (870 - 580) / 2.13
+    F_0 = min(F_grid) #(870 - 580) / 2.13 # total cumulated, as of now, preindustrial with Fo
+
+    # T_0 = To + 1.1
+    # C_0 = 275.5
+    # F_0 = (870 - 580) / 2.13
 
     def get_e(x):
         return Ca_func([x[0] - To, x[1], x[2]])
 
     # Ocean albedo
-    def alphaocean(T):
+    def alphaocean_1d(T):
         if T < Talphaocean_low:
             return alphaocean_max
         elif T < Talphaocean_high:
             return alphaocean_max + (alphaocean_min - alphaocean_max) / (Talphaocean_high - Talphaocean_low) * (T - Talphaocean_low)
-        else:  # so T is higher
+        else: # so T is higher
             return alphaocean_min
 
-    C0v = 1000
-    VC_min = 0
-    VC_max = 5/12 * C0v
-    
-    def Tvegoptlow(Cc):
-        if Cc < Cbio_low:
-            return VC_min
-        elif Cc < Cbio_high:
-            return VC_min + (VC_max - VC_min) / (Cbio_high - Cbio_low) * (Cc - Cbio_low)
-        else:  # so Cc is higher
-            return VC_max
-            # return -1
-
-    def Tveglow(Cc):
-
-        if Cc < Cbio_low:
-            return Tbiolow_low
-        elif Cc < Cbio_high:
-            return Tbiolow_low + (Tbiolow_high - Tbiolow_low) / (Cbio_high - Cbio_low) * (Cc - Cbio_low)
-            # return 1 - 2 / (Cbio_high - Cbio_low) * (Cc - Cbio_low)
-        else:  # so Cc is higher
-            return Tbiolow_high
-            # return -1
-        
     # Vegetation growth function
-    def veggrowthdyn(T, G):
-        if T < Tveglow(G):
+    def veggrowth_1d(T):
+        if T < Tlow:
             return 0
-        if (T >= Tveglow(G)) and (T < Tvegoptlow(G)):
-            return acc / (Tvegoptlow(G) - Tveglow(G)) * (T - Tveglow(G))
-        if (T >= Tvegoptlow(G)) and (T <= Topt2):
+        if (T >= Tlow) and (T < Topt1):
+            return acc / (Topt1 - Tlow) * (T - Tlow)
+        if (T >= Topt1) and (T <= Topt2):
             return acc
         if (T > Topt2) and (T < Thigh):
-            # return acc
+            #return acc
             return acc / (Topt2 - Thigh) * (T - Thigh)
         if T > Thigh:
-            # return acc
+            #return acc
             return 0
 
-
-    def oceanatmphysflux(T):
+    def oceanatmphysflux_1d(T):
         return 1 / tauc * (coc0 * (np.exp(-bP * (T - T0))))
 
-    def fracseaice(T):
+    def fracseaice_1d(T):
         if T < Talphaocean_low:
             return 1
         elif T < Talphaocean_high:
             return 1 - 1 / (Talphaocean_high - Talphaocean_low) * (T - Talphaocean_low)
-        else:  # so T is higher
+        else: # so T is higher
             return 0
 
-    # def biopump(Cc):
-    #     if Cc < Cbio_low:
-    #         return 1
-    #     elif Cc < Cbio_high:
-    #         return 1 - 1 / (Cbio_high - Cbio_low) * (Cc - Cbio_low)
-    #     else: 
-    #         return 0
+    def biopump_1d(Cc):
+        if Cc < Cbio_low:
+            return 1
+        elif Cc < Cbio_high:
+            return 1 - 1 / (Cbio_high - Cbio_low) * (Cc - Cbio_low)
+        else: 
+            return 0
 
 
-    def oceanbioflux(T):
-        return 1/tauc * (coc0 * (np.exp(bB * (T - T0))))
+    def oceanbioflux_1d(T, F, sa):
+        return 1/tauc * (coc0 * (np.exp(bB * biopump_1d(F) * (T - T0))))
 
-    def oceanatmcorrflux(C):
+    def oceanatmcorrflux_1d(C):
         return 1 / tauc * (- cod * C)
 
 
     def mu_T(x):
-        Ri_t = 1 / cearth * (Q0 * (1 - p * alphaland - (1 - p) * alphaocean(x[0])))
+        Ri_t = 1 / cearth * (Q0 * (1 - p * alphaland - (1 - p) * alphaocean_1d(x[0])))
         Ro_t = 1 / cearth * (kappa * (x[0] - Tkappa) -  B * np.log(x[1] / C0))
         return Ri_t - Ro_t
 
     def mu_C(x):
         Ca_t = Ca_func([x[0] - To, x[1], x[2]])
-        dC = V
+        dC = Volcan
         dC += Ca_t * sa
-        dC -= wa * x[1] * vegcover * veggrowthdyn(x[0],x[2])
-        dC += oceanatmphysflux(x[0]) * (1 - fracseaice(x[0]))
-        dC += oceanbioflux(x[0]) * (1 - fracseaice(x[0]))
-        dC += oceanatmcorrflux(x[1]) * (1 - fracseaice(x[0]))
+        dC -= wa * x[1] * vegcover * veggrowth_1d(x[0])
+        dC += oceanatmphysflux_1d(x[0]) * (1 - fracseaice_1d(x[0]))
+        dC += oceanbioflux_1d(x[0], x[2], sa) * (1 - fracseaice_1d(x[0]))
+        dC += oceanatmcorrflux_1d(x[1]) * (1 - fracseaice_1d(x[0]))
         return dC
 
     def mu_Sa(x):
