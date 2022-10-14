@@ -187,21 +187,21 @@ eta = 0.032
 
 # State variable
 # Temperature anomaly, in celsius
-T_min = 1e-8
-T_max = 10.
-hT = 0.2
+T_min = 0.
+T_max = 20.
+hT = 0.1
 T_grid = np.arange(T_min, T_max + hT, hT)
 
-# atmospheric carbon concentration, in ppm
-C_min = 200
-C_max = 400.
-hC = 4.
+# atmospheric carbon concentration, in gigaton
+C_min = 250
+C_max = 500
+hC = 10
 C_grid = np.arange(C_min, C_max + hC, hC)
 
-# F, Sa in the notes, accumulative anthropogenic carbon, in gigaton, since 1800
-F_min = 1e-8  # 10. avoid
-F_max = 2000.  # 2500 x2.13 gm # # on hold -> 4000 / 2.13 ppm
-hF = 40.
+# F, Sa in the notes, accumulative anthropogenic carbon, in gigaton
+F_min = 280.  # 10. avaoid
+F_max = 2500.  # 2500 x2.13 gm # # on hold -> 4000 / 2.13 ppm
+hF = 50.
 F_grid = np.arange(F_min, F_max + hF, hF)
 
 # meshgrid
@@ -403,6 +403,7 @@ for tm in range(pers):
                           * dt, To + min(T_grid))
         hist[tm, 1] = hist[tm-1, 1] + mu_C(hist[tm-1, :]) * dt
         hist[tm, 2] = hist[tm-1, 2] + mu_Sa(hist[tm-1, :]) * dt
+
     print("Time={:.2f}, T={:.2f}, C={:.2f}, g={:.2f} \n" .format(
         tm, hist[tm, 0], hist[tm, 1], e_hist[tm]))
 
