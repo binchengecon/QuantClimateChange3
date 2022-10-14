@@ -19,6 +19,7 @@ from scipy.interpolate import RegularGridInterpolator
 import SolveLinSys
 from supportfunctions import finiteDiff
 import argparse
+import os
 
 rcParams["figure.figsize"] = (8,5)
 rcParams["savefig.bbox"] = 'tight'
@@ -29,6 +30,8 @@ parser.add_argument("--maxiter",type=int,default=5000)
 parser.add_argument("--simutime",type=int,default=5000)
 parser.add_argument("--Xmaxarr",nargs='+',type=float)
 parser.add_argument("--hXarr",nargs='+',type=float)
+parser.add_argument("--fraction",type=float)
+parser.add_argument("--epsilon",type=float)
 
 
 args = parser.parse_args()
@@ -260,12 +263,12 @@ v0 =  - eta * T_mat - eta * F_mat
 # v0 =  delta * eta * np.log(delta /4 * (9000/2.13 - F_mat)) + (eta - 1) * gamma_2 * T_mat / cearth * (B * np.log(C_mat/ C0) + kappa * (T_mat + To - Tkappa))
 
 dG  = gamma_1 + gamma_2 * T_mat
-epsilon  = 0.05
+epsilon  = args.epsilon
 count    = 0
 error    = 1.
 tol      = 1e-8
 max_iter = args.maxiter
-fraction = 0.05
+fraction = args.fraction
 
 
 while error > tol and count < max_iter:
@@ -442,4 +445,18 @@ plt.plot(years, e_hist * 2.13)
 plt.xlabel("Years")
 plt.title("Emission in Gigaton")
 plt.ylim(-0.1)
-plt.savefig(f"./figure/Econ_Climate/Suri_T_C_E_{cearth}_{tauc}_{args.Xmaxarr}.pdf")
+plt.savefig(f"./figure/Econ_Climate/Suri_T_C_E_{cearth}_{tauc}_{args.maxiter}_{args.fraction}_{args.epsilon}_{args.Xmaxarr}_{args.hXarr}.pdf")
+
+res = {
+    "v0": v0,
+    "T": T_grid,
+    "C": C_grid,
+    "F": F_grid,
+    "Ca": Ca,
+}
+
+Data_Dir = "/scratch/bincheng/HJB_suri/"
+
+os.makedirs(Data_Dir, exist_ok=True)
+
+pickle.dump(res, open(f"/scratch/bincheng/HJB_suri/data_{cearth}_{tauc}_{args.maxiter}_{args.fraction}_{args.epsilon}_{args.Xmaxarr}_{args.hXarr}", "wb"))
