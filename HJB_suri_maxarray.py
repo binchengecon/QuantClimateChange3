@@ -29,6 +29,7 @@ parser = argparse.ArgumentParser(description="values")
 parser.add_argument("--maxiter",type=int,default=5000)
 parser.add_argument("--simutime",type=int,default=5000)
 parser.add_argument("--Xmaxarr",nargs='+',type=float)
+parser.add_argument("--Xminarr",nargs='+',type=float)
 parser.add_argument("--hXarr",nargs='+',type=float)
 parser.add_argument("--fraction",type=float)
 parser.add_argument("--epsilon",type=float)
@@ -222,19 +223,19 @@ eta     = 0.032
 
 # State variable
 # Temperature anomaly, in celsius
-T_min  = 1e-8 
+T_min  = args.Xminarr[0]
 T_max  = args.Xmaxarr[0] # 
 hT     = args.hXarr[0]
 T_grid = np.arange(T_min, T_max + hT, hT)
 
 # atmospheric carbon concentration, in gigaton
-C_min  = 200.
+C_min  = args.Xminarr[1]
 C_max  = args.Xmaxarr[1]
 hC     = args.hXarr[1]
 C_grid = np.arange(C_min, C_max + hC, hC)
 
 # F, Sa in the notes, accumulative anthropogenic carbon, in gigaton, since 1800
-F_min = 0. # 10. avaoid 
+F_min = args.Xminarr[2] # 10. avaoid 
 F_max = args.Xmaxarr[2] # 2500 x2.13 gm # # on hold -> 4000 / 2.13 ppm
 hF = args.hXarr[2]
 F_grid = np.arange(F_min, F_max + hF, hF)
@@ -330,7 +331,7 @@ Ca_func = RegularGridInterpolator(gridpoints, Ca)
 T_0 = To + min(T_grid)
 C_0 = 275.5
 # F_0 = min(F_grid) #(870 - 580) / 2.13 # total cumulated, as of now, preindustrial with Fo
-F_0 = 0. #(870 - 580) / 2.13 # total cumulated, as of now, preindustrial with Fo
+F_0 =  min(F_grid) #(870 - 580) / 2.13 # total cumulated, as of now, preindustrial with Fo
 
 # T_0 = To + 1.1
 # C_0 = 417
@@ -425,9 +426,10 @@ for tm in range(pers):
         # other periods
         e_hist[tm] = get_e(hist[tm-1,:])
 
-        hist[tm,0] = max(hist[tm-1,0] + mu_T(hist[tm-1,:]) * dt, To + min(T_grid))
-        hist[tm,1] = hist[tm-1,1] + mu_C(hist[tm-1,:]) * dt
+        hist[tm,0] = min(max(hist[tm-1,0] + mu_T(hist[tm-1,:]) * dt, T_grid.min()),T_grid.max())
+        hist[tm,1] = min(max(hist[tm-1,1] + mu_C(hist[tm-1,:]) * dt, C_grid.min()),C_grid.max())
         hist[tm,2] = hist[tm-1,2] + mu_Sa(hist[tm-1,:]) * dt
+    print("Time={:.2f}, T={:.2f}, C={:.2f}, g={:.2f} \n" .format(tm, hist[tm,0], hist[tm,1], e_hist[tm]))
 
 
 plt.subplots(1,3, figsize=(24,5))
@@ -445,7 +447,7 @@ plt.plot(years, e_hist * 2.13)
 plt.xlabel("Years")
 plt.title("Emission in Gigaton")
 plt.ylim(-0.1)
-plt.savefig(f"./figure/Econ_Climate/Suri_T_C_E_{cearth}_{tauc}_{args.maxiter}_{args.fraction}_{args.epsilon}_{args.Xmaxarr}_{args.hXarr}.pdf")
+plt.savefig(f"./figure/Econ_Climate/Suri_T_C_E_{cearth}_{tauc}_{args.maxiter}_{args.fraction}_{args.epsilon}_{args.Xminarr}_{args.Xmaxarr}_{args.hXarr}.pdf")
 
 res = {
     "v0": v0,
@@ -459,4 +461,5 @@ Data_Dir = "/scratch/bincheng/HJB_suri/"
 
 os.makedirs(Data_Dir, exist_ok=True)
 
-pickle.dump(res, open(f"/scratch/bincheng/HJB_suri/data_{cearth}_{tauc}_{args.maxiter}_{args.fraction}_{args.epsilon}_{args.Xmaxarr}_{args.hXarr}", "wb"))
+pickle.dump(res, open(f"/scratch/bincheng/HJB_suri/data_{cearth}_{tauc}_{args.maxiter}_{args.fraction}_{args.epsilon}_{args.Xminarr}_{args.Xmaxarr}_{args.hXarr}", "wb"))
+pickle.dump(res, open(f"./data/data_{cearth}_{tauc}_{args.maxiter}_{args.fraction}_{args.epsilon}_{args.Xminarr}_{args.Xmaxarr}_{args.hXarr}", "wb"))

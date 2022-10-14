@@ -8,36 +8,54 @@ action_name=$python_name
 # taucarray=(1886 6603)
 ceartharray=(35)
 taucarray=(6603)
-maxiter=10
-fraction=0.1
-epsilon=0.1
+maxiterarr=(10 5000 30000 50000)
+fractionarr=(0.05 0.1)
+epsilonarr=(0.05 0.1)
 simutime=600
+count=0
 
+# 1
 hXarr=(0.2 4.0 40)
-Xminarr=(0.00000001 0.0 0.00000001)
+Xminarr=(0.0 200 0.0)
 Xmaxarr=(10 400 2000)
 
-count=0
-for cearth in ${ceartharray[@]}; do
-    for tauc in ${taucarray[@]}; do
-        mkdir -p ./job-outs/${action_name}/cearth_${cearth}_tauc_${tauc}/
+# 2
+# hXarr=(0.1 10 50)
+# Xminarr=(0.0 250 280)
+# Xmaxarr=(20 500 2500)
 
-        if [ -f ./bash/${action_name}/cearth_${cearth}_tauc_${tauc}_${simutime}_${Xmaxarr[0]}_${Xmaxarr[1]}_${Xmaxarr[2]}_${hXarr[0]}_${hXarr[1]}_${hXarr[2]}_${fraction}_${epsilon}.sh ]; then
-            rm ./bash/${action_name}/cearth_${cearth}_tauc_${tauc}_${simutime}_${Xmaxarr[0]}_${Xmaxarr[1]}_${Xmaxarr[2]}_${hXarr[0]}_${hXarr[1]}_${hXarr[2]}_${fraction}_${epsilon}.sh
-        fi
+# 3
+# hXarr=(0.1 2.0 20)
+# Xminarr=(0.0 200 0.0)
+# Xmaxarr=(10 400 2000)
 
-        mkdir -p ./bash/${action_name}/
+for fraction in ${fractionarr[@]}; do
+    for epsilon in ${epsilonarr[@]}; do
 
-        touch ./bash/${action_name}/cearth_${cearth}_tauc_${tauc}_${simutime}_${Xmaxarr[0]}_${Xmaxarr[1]}_${Xmaxarr[2]}_${hXarr[0]}_${hXarr[1]}_${hXarr[2]}_${fraction}_${epsilon}.sh
+        for maxiter in ${maxiterarr[@]}; do
 
-        tee -a ./bash/${action_name}/cearth_${cearth}_tauc_${tauc}_${simutime}_${Xmaxarr[0]}_${Xmaxarr[1]}_${Xmaxarr[2]}_${hXarr[0]}_${hXarr[1]}_${hXarr[2]}_${fraction}_${epsilon}.sh <<EOF
+            for cearth in ${ceartharray[@]}; do
+                for tauc in ${taucarray[@]}; do
+                    mkdir -p ./job-outs/${action_name}/cearth_${cearth}_tauc_${tauc}/
+
+                    if
+                        [ -f ./bash/${action_name}/cearth_${cearth}_tauc_${tauc}_${simutime}_${Xminarr[0]},${Xmaxarr[0]},${hXarr[0]}_${Xminarr[1]},${Xmaxarr[1]},${hXarr[1]}_${Xminarr[2]},${Xmaxarr[2]},${hXarr[2]}_${fraction}_${epsilon}.sh ]
+                    then
+                        rm ./bash/${action_name}/cearth_${cearth}_tauc_${tauc}_${simutime}_${Xminarr[0]},${Xmaxarr[0]},${hXarr[0]}_${Xminarr[1]},${Xmaxarr[1]},${hXarr[1]}_${Xminarr[2]},${Xmaxarr[2]},${hXarr[2]}_${fraction}_${epsilon}.sh
+                    fi
+
+                    mkdir -p ./bash/${action_name}/
+
+                    touch ./bash/${action_name}/cearth_${cearth}_tauc_${tauc}_${simutime}_${Xminarr[0]},${Xmaxarr[0]},${hXarr[0]}_${Xminarr[1]},${Xmaxarr[1]},${hXarr[1]}_${Xminarr[2]},${Xmaxarr[2]},${hXarr[2]}_${fraction}_${epsilon}.sh
+
+                    tee -a ./bash/${action_name}/cearth_${cearth}_tauc_${tauc}_${simutime}_${Xminarr[0]},${Xmaxarr[0]},${hXarr[0]}_${Xminarr[1]},${Xmaxarr[1]},${hXarr[1]}_${Xminarr[2]},${Xmaxarr[2]},${hXarr[2]}_${fraction}_${epsilon}.sh <<EOF
 #! /bin/bash
 
 
 ######## login
 #SBATCH --job-name=im_$count
-#SBATCH --output=./job-outs/${action_name}/cearth_${cearth}_tauc_${tauc}/mercury_${maxiter}_${simutime}_${Xmaxarr[0]}_${Xmaxarr[1]}_${Xmaxarr[2]}_${hXarr[0]}_${hXarr[1]}_${hXarr[2]}_${fraction}_${epsilon}.out
-#SBATCH --error=./job-outs/${action_name}/cearth_${cearth}_tauc_${tauc}/mercury_${maxiter}_${simutime}_${Xmaxarr[0]}_${Xmaxarr[1]}_${Xmaxarr[2]}_${hXarr[0]}_${hXarr[1]}_${hXarr[2]}_${fraction}_${epsilon}.err
+#SBATCH --output=./job-outs/${action_name}/cearth_${cearth}_tauc_${tauc}/mercury_${maxiter}_${simutime}_${Xminarr[0]},${Xmaxarr[0]},${hXarr[0]}_${Xminarr[1]},${Xmaxarr[1]},${hXarr[1]}_${Xminarr[2]},${Xmaxarr[2]},${hXarr[2]}_${fraction}_${epsilon}.out
+#SBATCH --error=./job-outs/${action_name}/cearth_${cearth}_tauc_${tauc}/mercury_${maxiter}_${simutime}_${Xminarr[0]},${Xmaxarr[0]},${hXarr[0]}_${Xminarr[1]},${Xmaxarr[1]},${hXarr[1]}_${Xminarr[2]},${Xmaxarr[2]},${hXarr[2]}_${fraction}_${epsilon}.err
 
 
 #SBATCH --account=pi-lhansen
@@ -53,13 +71,18 @@ echo "\$SLURM_JOB_NAME"
 
 echo "Program starts \$(date)"
 
-python3 /home/bcheng4/QuantClimateChange/$python_name --maxiter ${maxiter}  --simutime ${simutime} --Xmaxarr ${Xmaxarr[@]} --hXarr ${hXarr[@]} --fraction ${fraction} --epsilon ${epsilon}
+python3 /home/bcheng4/QuantClimateChange/$python_name --maxiter ${maxiter}  --simutime ${simutime} --Xmaxarr ${Xmaxarr[@]} --Xminarr ${Xminarr[@]} --hXarr ${hXarr[@]} --fraction ${fraction} --epsilon ${epsilon}
 
 echo "Program ends \$(date)"
 
 EOF
 
-        sbatch ./bash/${action_name}/cearth_${cearth}_tauc_${tauc}_${simutime}_${Xmaxarr[0]}_${Xmaxarr[1]}_${Xmaxarr[2]}_${hXarr[0]}_${hXarr[1]}_${hXarr[2]}_${fraction}_${epsilon}.sh
-        count=$(($count + 1))
+                    sbatch ./bash/${action_name}/cearth_${cearth}_tauc_${tauc}_${simutime}_${Xminarr[0]},${Xmaxarr[0]},${hXarr[0]}_${Xminarr[1]},${Xmaxarr[1]},${hXarr[1]}_${Xminarr[2]},${Xmaxarr[2]},${hXarr[2]}_${fraction}_${epsilon}.sh
+                    count=$(($count + 1))
+                done
+            done
+
+        done
+
     done
 done
