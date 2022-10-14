@@ -15,9 +15,9 @@ simutime=600
 count=0
 
 # 1
-hXarr=(0.2 4.0 40)
-Xminarr=(0.0 200 0.0)
-Xmaxarr=(10 400 2000)
+# hXarr=(0.2 4.0 40)
+# Xminarr=(0.0 200 0.0)
+# Xmaxarr=(10 400 2000)
 
 # 2
 # hXarr=(0.1 10 50)
@@ -25,9 +25,9 @@ Xmaxarr=(10 400 2000)
 # Xmaxarr=(20 500 2500)
 
 # 3
-# hXarr=(0.1 2.0 20)
-# Xminarr=(0.0 200 0.0)
-# Xmaxarr=(10 400 2000)
+hXarr=(0.1 2.0 20)
+Xminarr=(0.0 200 0.0)
+Xmaxarr=(10 400 2000)
 
 for fraction in ${fractionarr[@]}; do
     for epsilon in ${epsilonarr[@]}; do

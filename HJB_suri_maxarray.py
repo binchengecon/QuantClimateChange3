@@ -322,6 +322,31 @@ while error > tol and count < max_iter:
 print("Total iteration: %s;\t LHS Error: %s;\t RHS Error %s\t" % (count, lhs_error, rhs_error),flush=True)
 
 
+
+
+
+
+
+res = {
+    "v0": v0,
+    "T": T_grid,
+    "C": C_grid,
+    "F": F_grid,
+    "Ca": Ca,
+}
+
+Data_Dir = "/scratch/bincheng/HJB_suri/"
+
+os.makedirs(Data_Dir, exist_ok=True)
+
+pickle.dump(res, open(f"/scratch/bincheng/HJB_suri/data_{cearth}_{tauc}_{args.maxiter}_{args.fraction}_{args.epsilon}_{args.Xminarr}_{args.Xmaxarr}_{args.hXarr}", "wb"))
+pickle.dump(res, open(f"./data/data_{cearth}_{tauc}_{args.maxiter}_{args.fraction}_{args.epsilon}_{args.Xminarr}_{args.Xmaxarr}_{args.hXarr}", "wb"))
+
+
+
+
+
+
 t_max = args.simutime
 # dt = 1/12
 dt = 1  # , Gigaton per year
@@ -449,17 +474,3 @@ plt.title("Emission in Gigaton")
 plt.ylim(-0.1)
 plt.savefig(f"./figure/Econ_Climate/Suri_T_C_E_{cearth}_{tauc}_{args.maxiter}_{args.fraction}_{args.epsilon}_{args.Xminarr}_{args.Xmaxarr}_{args.hXarr}.pdf")
 
-res = {
-    "v0": v0,
-    "T": T_grid,
-    "C": C_grid,
-    "F": F_grid,
-    "Ca": Ca,
-}
-
-Data_Dir = "/scratch/bincheng/HJB_suri/"
-
-os.makedirs(Data_Dir, exist_ok=True)
-
-pickle.dump(res, open(f"/scratch/bincheng/HJB_suri/data_{cearth}_{tauc}_{args.maxiter}_{args.fraction}_{args.epsilon}_{args.Xminarr}_{args.Xmaxarr}_{args.hXarr}", "wb"))
-pickle.dump(res, open(f"./data/data_{cearth}_{tauc}_{args.maxiter}_{args.fraction}_{args.epsilon}_{args.Xminarr}_{args.Xmaxarr}_{args.hXarr}", "wb"))
