@@ -20,14 +20,19 @@ count=0
 # Xmaxarr=(10 400 2000)
 
 # 2
-# hXarr=(0.1 10 50)
+# hXarr=(0.2 4.0 50)
 # Xminarr=(0.0 250 280)
 # Xmaxarr=(20 500 2500)
 
 # 3
-hXarr=(0.1 2.0 20)
-Xminarr=(0.0 200 0.0)
-Xmaxarr=(10 400 2000)
+# hXarr=(0.1 2.0 20)
+# Xminarr=(0.0 200 0.0)
+# Xmaxarr=(10 400 2000)
+
+# 4
+hXarr=(0.1 4.0 40)
+Xminarr=(0.0 200 0)
+Xmaxarr=(15 400 400)
 
 for fraction in ${fractionarr[@]}; do
     for epsilon in ${epsilonarr[@]}; do
