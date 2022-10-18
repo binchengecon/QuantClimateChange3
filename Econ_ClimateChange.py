@@ -23,12 +23,17 @@ parser = argparse.ArgumentParser(description="values")
 
 parser.add_argument("--maxiter",type=int,default=5000)
 parser.add_argument("--fraction",type=float,default=0.1)
-parser.add_argument("--cearth",type=float,default=0.3916)
-parser.add_argument("--tauc",type=float,default=30)
+parser.add_argument("--epsilon",type=float)
+
+parser.add_argument("--simutime",type=int,default=5000)
+
 
 parser.add_argument("--hXarr",nargs='+',type=float, default=(0.4, 4.0, 40.0))
 parser.add_argument("--Xminarr",nargs='+',type=float, default=(1e-8, 0.0, -5.5))
 parser.add_argument("--Xmaxarr",nargs='+',type=float, default=(9.0, 4.0, 0.0))
+
+parser.add_argument("--cearth",type=float,default=0.3916)
+parser.add_argument("--tauc",type=float,default=30)
 
 args = parser.parse_args()
 
@@ -378,7 +383,7 @@ def model(cearth=0.3916,tauc = 30):
     # v0 =  delta * eta * np.log(delta /4 * (9000/2.13 - F_mat)) + (eta - 1) * gamma_2 * T_mat / cearth * (B * np.log(C_mat/ C0) + kappa * (T_mat + To - Tkappa))
 
     dG = gamma_1 + gamma_2 * T_mat
-    epsilon = args.fraction
+    epsilon = args.epsilon
     count = 0
     error = 1.
     tol = 1e-8
@@ -510,7 +515,7 @@ def simulation(T_grid,C_grid,F_grid,Ca,cearth=0.3916,tauc = 30):
     V = 2.028
 
 
-    t_max = 600.
+    t_max = args.simutime
     dt = 1/12
     sa = 1  # , Gigaton per year
     gridpoints = (T_grid, C_grid, F_grid)   

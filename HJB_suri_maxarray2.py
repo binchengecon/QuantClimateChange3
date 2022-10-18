@@ -27,12 +27,16 @@ rcParams["savefig.bbox"] = 'tight'
 parser = argparse.ArgumentParser(description="values")
 
 parser.add_argument("--maxiter",type=int,default=5000)
+parser.add_argument("--fraction",type=float)
+
 parser.add_argument("--simutime",type=int,default=5000)
+
+parser.add_argument("--epsilon",type=float)
+
 parser.add_argument("--Xmaxarr",nargs='+',type=float)
 parser.add_argument("--Xminarr",nargs='+',type=float)
 parser.add_argument("--hXarr",nargs='+',type=float)
-parser.add_argument("--fraction",type=float)
-parser.add_argument("--epsilon",type=float)
+parser.add_argument("--filename",type=str)
 
 
 args = parser.parse_args()
@@ -316,8 +320,8 @@ while error > tol and count < max_iter:
     v0 = v
     Ca_star = Ca
     count += 1
-
-    print("Iteration: %s;\t False Transient Error: %s;\t PDE Error: %s\t" % (count, lhs_error, rhs_error),flush=True)
+    if count%1000==0:
+        print("Iteration: %s;\t False Transient Error: %s;\t PDE Error: %s\t" % (count, lhs_error, rhs_error),flush=True)
 
 print("Total iteration: %s;\t LHS Error: %s;\t RHS Error %s\t" % (count, lhs_error, rhs_error),flush=True)
 
@@ -335,14 +339,12 @@ res = {
     "Ca": Ca,
 }
 
-Data_Dir = "/scratch/bincheng/HJB_suri/"
-Data_Dir2 = "./data/guess2/"
+Data_Dir = "./data/"+args.filename+"/"
 
 os.makedirs(Data_Dir, exist_ok=True)
-os.makedirs(Data_Dir2, exist_ok=True)
 
+# pickle.dump(res, open(f"/scratch/bincheng/HJB_suri/data_{cearth}_{tauc}_{args.maxiter}_{args.fraction}_{args.epsilon}_{args.Xminarr}_{args.Xmaxarr}_{args.hXarr}", "wb"))
 pickle.dump(res, open(Data_Dir+f"data_{cearth}_{tauc}_{args.maxiter}_{args.fraction}_{args.epsilon}_{args.Xminarr}_{args.Xmaxarr}_{args.hXarr}", "wb"))
-pickle.dump(res, open(Data_Dir2+f"data_{cearth}_{tauc}_{args.maxiter}_{args.fraction}_{args.epsilon}_{args.Xminarr}_{args.Xmaxarr}_{args.hXarr}", "wb"))
 
 
 
@@ -474,8 +476,10 @@ plt.plot(years, e_hist * 2.13)
 plt.xlabel("Years")
 plt.title("Emission in Gigaton")
 plt.ylim(-0.1)
-Fig_Dir = "./figure/Econ_Climate/newguess/"
+# plt.savefig(f"./figure/Econ_Climate/Suri_T_C_E_{cearth}_{tauc}_{args.maxiter}_{args.fraction}_{args.epsilon}_{args.Xminarr}_{args.Xmaxarr}_{args.hXarr}.pdf")
+
+Fig_Dir = "./figure/"+args.filename+"/"
 
 os.makedirs(Fig_Dir, exist_ok=True)
-plt.savefig(Fig_Dir+f"Suri_T_C_E_{cearth}_{tauc}_{args.maxiter}_{args.fraction}_{args.epsilon}_{args.Xminarr}_{args.Xmaxarr}_{args.hXarr}.pdf")
 
+plt.savefig(Fig_Dir+f"T_C_E_{cearth}_{tauc}_{args.maxiter}_{args.fraction}_{args.epsilon}_{args.Xminarr}_{args.Xmaxarr}_{args.hXarr}.pdf")
